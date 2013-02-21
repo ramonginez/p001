@@ -2,32 +2,38 @@
 <web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	
+    <!-- Set project name. The generated war will be p001.war -->
 	<display-name>p001</display-name>
-	<context-param>
-		<param-name>contextClass</param-name>
-		<param-value>
-			org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-		</param-value>
-	</context-param>
+
+	<!-- Required to intersect and run spring -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<!-- Root servlet (Spring) -->
 	<servlet>
 		<servlet-name>SpringDispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		
+		<!--  To use Annotation Spring) -->
 		<init-param>
 			<param-name>contextClass</param-name>
 			<param-value>
 				org.springframework.web.context.support.AnnotationConfigWebApplicationContext
 			</param-value>
 		</init-param>
+		
+		<!-- Path to the configuration file (nahmens/p001/config/MvcConfiguration.java)-->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>nahmens.p001</param-value>
 		</init-param>
+		
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
+	
 	<servlet-mapping>
 		<servlet-name>SpringDispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
