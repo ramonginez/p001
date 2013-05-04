@@ -1,3 +1,274 @@
-body {
-    background-color: gray;
+@charset "UTF-8";
+/* CSS */
+h1 , h2{
+	text-align:center;
+	color: #4E4E4E;
+}
+legend{
+	
+	color: #4E4E4E;
+    font-size: 20px;
+    font-weight: bold;
+	
+}
+fieldset{
+	margin-top: 15px;
+    padding: 10px;}
+.wrap {
+	margin-left: auto;
+	margin-right: auto;
+	width: 800px;
+}
+
+/*################### Login ######################### */
+
+.login-wrapper {
+	  background-color: rgba(255, 255, 255, 0.45);
+    border: 1px solid #FFFFFF;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 0 5px #AAAAAA;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    padding: 15px;
+    width: 300px;
+}
+.login-logo {
+	width: 100%;
+	text-align:center;
+	padding: 8px;
+}
+.login-logo img {
+	width: 270px;
+}
+.login-form {
+	width: 280px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.login-form input[type=text], input[type=password] {
+	width: 70%;
+}
+.login-form div {
+	text-align:right;
+	padding: 4px;
+}
+.login-form .label {
+	text-align:left;
+	width: 25%;
+	float:left;
+}
+.login-form .btn {
+	text-align:center;
+}
+.login-form input[type=submit], input[type=reset] {
+	padding: 8px;
+	width: 100px;
+}
+.login-form .errorblock {
+	color: #ff0000;
+	background-color: #ffEEEE;
+	border: 3px solid #ff0000;
+	padding: 8px;
+	text-align:center;
+}
+/*################### Header  ################################ */
+.header-container {
+	border-bottom: 1px solid;
+	border-width: 1px;
+	height: 123px;
+	width: 100%;
+ border-color:;
+	padding-bottom: 0;
+	min-width: 800px;
+}
+.header-container ul {
+	margin:0
+}
+.header-container li {
+	background-image: url("../img/tab-bg.gif");
+	background-repeat: no-repeat;
+	float: left;
+	height: 25px;
+	list-style-type: none;
+	position: relative;
+	text-align: center;
+	top: 2px;
+	width: 148px;
+}
+.header-container a {
+	display: block;
+	text-decoration: none;
+	color: #000;
+	padding-top: 4px;
+	padding-right: 40px;
+	padding-bottom: 5px;
+	padding-left: 40px;
+}
+.header-container .tab-active {
+	background-image: url("../img/tab-active-bg.gif");
+	height: 31px;
+	top: -3px;
+}
+#logout {
+	float: right;
+	width: 150px;
+}
+.header-logo {
+	text-align:left;
+}
+.header-logo img {
+	padding: 10px;
+	width: 114px;
+}
+/*################### Proyectos  ################################ */
+
+.proyectos-search-wrap {
+	text-align: center;
+	width: 95%;
+	padding: 15px;
+}
+.proyectos-search-wrap div {
+	display:inline;
+	padding-left: 4px;
+	padding-right: 4px
+}
+.proyectos-search-wrap img {
+	height: 23px;
+	vertical-align: middle;
+	width: 21px;
+}
+.search input[type=text] {
+	width: 60%;
+}
+.search {
+	width:80%;
+}
+.proyectos-list {
+	width: 100%;
+}
+.proyectos-list table {
+	width: 100%;
+}
+.proyectos-list td {
+	border-bottom: 1px dotted black;
+}
+.proyectos-list ul {
+	list-style-type: none;
+}
+.proyectos-list li a {
+	display: inline;
+	height: 20px;
+	padding: 5px;
+	width: 23px;
+}
+.proyectos-list li div {
+	padding: 5px;
+	width: 27%;
+	float:left;
+}
+
+.proyectos-create-box {
+	margin-left: auto;
+    padding-bottom: 10px;
+    width: 23%;
+    }
+.proyectos-create-box img{
+	    vertical-align: bottom;
+    	width: 23px;
+}
+.proyectos-search-wrap form{
+	display: inline;
+    width: 75%;
+}
+
+/*################### Activo  ################################ */
+
+.media >li
+{
+	display: inline;
+	list-style-type: none;
+
+}
+.media
+{
+	margin-left: auto;
+	margin-right: auto;	
+	width: 85%;
+}
+.media A
+{
+	padding:10px;
+}
+
+.container-text div{
+
+	display: inline-block;
+    padding: 5px;
+    width: 30%;
+}
+.container-text div input[type=text]{
+    width: 90%;
+}
+.container-text div select{
+    width: 206px;
+}
+
+.salvar {
+ 
+ 	padding: 12px;
+    text-align: right;	
+}
+.salvar input{
+    width: 206px;
+	 height: 40px;
+}
+/*################### Carousel  ################################ */
+
+.jcarousel-skin-tango .jcarousel-container-horizontal {
+    padding: 20px 40px;
+    width: 675px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.jcarousel-skin-tango .jcarousel-clip-horizontal {
+    height: 170px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 620px;
+    }
+.jcarousel-skin-tango .jcarousel-item {
+    height: 170px;
+    width: 210px;
+    padding: 1px;
+    
+}
+.jcarousel-skin-tango .jcarousel-container {
+    background: none repeat scroll 0 0 #EAEAEA;
+    border: 1px solid #4E4E4E;
+}
+
+/*################### Checkin  ################################ */
+.checkin_list_box{
+ 	float: left;
+    padding-right: 10px;
+    width: 190px;
+}
+#map_canvas{
+	height: 300px;
+	width: 600px;
+    
+}
+.date-box{
+	margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 15px;
+    width: 300px;
+}
+
+.date-box p{
+	float: left;
+    margin: 0;
+    padding-right: 20px;
+    width: 204px;
 }
