@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>VaSa</title>
-<link rel="stylesheet" type="text/css" href="/inventario/static/css/style.css">
+        <link href="resources/css/style.css" type="text/css" rel="stylesheet">
 </head>
 
 <body onload='document.f.j_username.focus();'>
 <div class="login-wrapper">
-<div class="login-logo"> <img src="/inventario/static/img/logo.png" alt="VaSa"> </div>
+<div class="login-logo"> <img src="resources/img/logo.png" alt="VaSa"> </div>
 <div class="login-form">
   <c:if test="${not empty error}">
     <div class="errorblock"> Intento fallido, tratar nuevamente.<br />
