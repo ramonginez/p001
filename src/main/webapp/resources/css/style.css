@@ -116,6 +116,7 @@ fieldset{
 }
 .header-logo {
 	text-align:left;
+	height: 96px;
 }
 .header-logo img {
 	padding: 10px;
