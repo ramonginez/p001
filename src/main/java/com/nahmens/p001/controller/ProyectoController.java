@@ -62,6 +62,9 @@ public class ProyectoController implements Constants {
 
 	}
 
+	/*
+	 * SEARCH PROJECTS TODO: THE SEARCHS ARE RETURNING NULL
+	 */	
 	@RequestMapping(value="/"+REST_PATH_SEARCH_PROYECTO, method = RequestMethod.GET)
 	public String searchProyecto(@RequestParam(PARAMETER_KEY_PROYECTO_SEARCH_KEY)  String value,ModelMap model) throws SQLException, JSONException {
 
@@ -83,6 +86,9 @@ public class ProyectoController implements Constants {
 
 	}
 
+	/*
+	 * DELETE PROJECT
+	 */
 	@RequestMapping(value="/"+REST_PATH_DELETE_PROYECTO, method = RequestMethod.POST)
 	public String deleteProyecto(@RequestParam(PARAMETER_KEY_PROYECTO_ID)  String value,ModelMap model) throws SQLException, JSONException {
 
@@ -107,6 +113,9 @@ public class ProyectoController implements Constants {
 
 	}
 
+	/*
+	 * EDIT PROJECT
+	 */
 	@RequestMapping(value="/"+REST_PATH_EDIT_PROYECTO, method = RequestMethod.POST)
 	public String editProyecto(@RequestParam(PARAMETER_KEY_PROYECTO_NAME)  String name,
 			@RequestParam(PARAMETER_KEY_PROYECTO_NEW_NAME)  String newName,ModelMap model) throws SQLException, JSONException {

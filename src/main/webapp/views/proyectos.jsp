@@ -1,10 +1,7 @@
 <%@ page import="org.json.JSONArray,org.json.JSONObject, com.nahmens.p001.utils.Constants"%>
 
 <%
-	org.json.JSONArray proyectos = (JSONArray)request.getAttribute("proyectos");
-	String proyectoPage="/inventario/proyectos/";
-	String removePage="/inventario/remove/proyectos/";
-	
+	org.json.JSONArray proyectos = (JSONArray)request.getAttribute(Constants.PARAMETER_KEY_PROYECTOS);	
 	
 %>
 
@@ -21,7 +18,6 @@
     <script type="text/javascript" src="resources/js/actions.js"></script>
 	    
 	<script type="text/javascript">
-   		var _editLink = "<%=proyectoPage%>";
 	 
 	 	function deleteProject(value){
 	 	
@@ -134,9 +130,9 @@
 				for(int i = 0; i < proyectos.length(); i++){
 	
 		        	String name = proyectos.getJSONObject(i).getString("name");
-					String link = proyectoPage+name;
-					String remove = removePage+name;
-				%>
+					
+					String link = Constants.REST_PATH_LIST_INVENTARIO.replace("{"+Constants.PARAMETER_KEY_PROYECTO_NAME+"}", name);
+			%>
 
   
 	<tr  bgcolor="#f2f2f2" class="edit_tr">
