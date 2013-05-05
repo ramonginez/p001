@@ -250,15 +250,18 @@ fieldset{
 }
 
 /*################### Checkin  ################################ */
-.checkin_list_box{
- 	float: left;
-    padding-right: 10px;
-    width: 190px;
+.checkin_box{
+	min-width: 300px;
 }
+
+.checkin_list_box li{
+    padding-right: 10px;
+}
+
 #map_canvas{
-	height: 300px;
-	width: 600px;
-    
+  	float: right;
+    height: 300px;
+    width: 70%;
 }
 .date-box{
 	margin-left: auto;

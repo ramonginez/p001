@@ -1,4 +1,4 @@
-package datacontroller;
+package com.nahmens.p001.datacontroller;
 
 import java.sql.Blob;
 import java.sql.Connection;

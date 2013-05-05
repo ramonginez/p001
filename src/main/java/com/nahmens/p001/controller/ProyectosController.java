@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.apache.log4j.Logger;
 
-import datacontroller.MysqlDataController;
+import com.nahmens.p001.datacontroller.MysqlDataController;
+
 
 @Controller
 public class ProyectosController
