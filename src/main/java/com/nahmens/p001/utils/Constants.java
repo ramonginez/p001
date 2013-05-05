@@ -21,8 +21,10 @@ public interface Constants {
 	public static final String  PARAMETER_KEY_INVENTARIO_SEARCH_KEY ="skey";
 	public static final String  PARAMETER_KEY_PROYECTOS ="proyectos";
 	public static final String  PARAMETER_KEY_PROYECTO_ID ="pid";
+	public static final String  PARAMETER_KEY_INVENTARIO_ID ="invid";
 	public static final String  PARAMETER_KEY_JSON_RESPONSE_OBJECT ="res";
 	public static final String  PARAMETER_KEY_ACTIVOS ="activos";
+	public static final String  PARAMETER_KEY_ID ="id";
 
 
 	//JSON RESPONSE KEYS
@@ -41,7 +43,10 @@ public interface Constants {
 
 	public static final String REST_PATH_LIST_INVENTARIO 	="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/inventario_list";
 	public static final String REST_PATH_SEARCH_INVENTARIO 	="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/inventario_search";
+	public static final String REST_PATH_DELETE_INVENTARIO 	="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/inventario_delete";
+	public static final String REST_PATH_REPORT_INVENTARIO 	="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/reporte";
 
+	
 	
 
 }

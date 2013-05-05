@@ -11,7 +11,8 @@
 	String createActivoPage="/inventario/create/activo/"+project;
 						
 	String buscarActivoPage = Constants.REST_PATH_SEARCH_INVENTARIO.replace("{"+Constants.PARAMETER_KEY_PROYECTO_NAME+"}", project);
-	
+	String deleteInventario = Constants.REST_PATH_DELETE_INVENTARIO.replace("{"+Constants.PARAMETER_KEY_PROYECTO_NAME+"}", project);
+	String reporteInventario = Constants.REST_PATH_REPORT_INVENTARIO.replace("{"+Constants.PARAMETER_KEY_PROYECTO_NAME+"}", project);
 	
 %>
 
@@ -25,12 +26,21 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>          
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/actions.js"></script>
 
-	<script>
+	<script type="text/javascript">
+	 
+	 	function deleteInventario(value){
+	 	
+	 		var confirm_box = confirm('Confirmar eliminar?');
 
-		    		var _editLink = "<%=activosPage%>";
-		    		var _removeLink = "<%=removePage%>";
-
-	</script>
+    		if (confirm_box) {
+				$('<form action="${pageContext.request.contextPath}/<%=deleteInventario%>" method="POST">' + 
+			    '<input type="hidden" name="<%=Constants.PARAMETER_KEY_INVENTARIO_ID%>" value="' + value + '">' +
+			    '</form>').appendTo($(document.body)).submit();
+			}
+		}
+	   	
+    		
+    </script>
 
 </head>
 
@@ -53,7 +63,7 @@
      <div>
       <a href="<%=createActivoPage%>"><img src="${pageContext.request.contextPath}/resources/img/add.png" alt="Agregar"></a>
     </div>
-    <div><a href="<%=excel%>"><img src="${pageContext.request.contextPath}/resources/img/excel.png" alt="VaSa">(Reporte)</a></div>
+    <div><a href="${pageContext.request.contextPath}/<%=reporteInventario%>"><img src="${pageContext.request.contextPath}/resources/img/excel.png" alt="Reporte"></a>
   </div>
 
   <div class="proyectos-list">
@@ -96,7 +106,7 @@
 
 	 <td><img src="${pageContext.request.contextPath}/resources/img/semaforo-activo1.gif" alt="verde"></td>
      <td><a href="<%=link%>"><img src="${pageContext.request.contextPath}/resources/img/edit.png" alt="VaSa"></a></td>
-     <td><a class="confirm" href="<%=remove%>"><img src="${pageContext.request.contextPath}/resources/img/remove.png" alt="VaSa"></a></td>
+     <td><a class="confirm" href="#" onclick="deleteInventario('<%=id%>');" ><img src="${pageContext.request.contextPath}/resources/img/remove.png" alt="VaSa"></a></td>
 
 	</tr>
   	
