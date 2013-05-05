@@ -19,7 +19,7 @@ import com.nahmens.p001.utils.Constants;
 @Controller
 public class InventarioController implements Constants {
 
-	Logger _logger = Logger.getLogger(ProyectoController.class);
+	Logger _logger = Logger.getLogger(InventarioController.class);
 	
 	
 	/*

@@ -5,7 +5,6 @@
 	String project = (String)request.getAttribute(Constants.PARAMETER_KEY_PROYECTO_NAME);
 	
 	
-	String activosPage="/inventario/activo/";
 	String excel ="/inventario/reporte/"+project;
 	String removePage="/inventario/remove/activo/";
 	String createActivoPage="/inventario/create/activo/"+project;
@@ -13,7 +12,7 @@
 	String buscarActivoPage = Constants.REST_PATH_SEARCH_INVENTARIO.replace("{"+Constants.PARAMETER_KEY_PROYECTO_NAME+"}", project);
 	String deleteInventario = Constants.REST_PATH_DELETE_INVENTARIO.replace("{"+Constants.PARAMETER_KEY_PROYECTO_NAME+"}", project);
 	String reporteInventario = Constants.REST_PATH_REPORT_INVENTARIO.replace("{"+Constants.PARAMETER_KEY_PROYECTO_NAME+"}", project);
-	
+	String activosPage= Constants.REST_PATH_ACTIVO.replace("{"+Constants.PARAMETER_KEY_PROYECTO_NAME+"}", project);
 %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -38,7 +37,8 @@
 			    '</form>').appendTo($(document.body)).submit();
 			}
 		}
-	   	
+		
+		
     		
     </script>
 
@@ -87,12 +87,8 @@
     	
     	String id = activos.getJSONObject(i).getString("id");
     	
-		String link = activosPage+id;
-		
-		String remove = removePage+id;
-		
-		
-		
+    	String link= activosPage.replace("{"+Constants.PARAMETER_KEY_ACTIVO_ID+"}", id);
+    	
 	%>
 	<tr bgcolor="#f2f2f2" >
 
@@ -105,7 +101,7 @@
 	</td>
 
 	 <td><img src="${pageContext.request.contextPath}/resources/img/semaforo-activo1.gif" alt="verde"></td>
-     <td><a href="<%=link%>"><img src="${pageContext.request.contextPath}/resources/img/edit.png" alt="VaSa"></a></td>
+     <td><a href="${pageContext.request.contextPath}/<%=link%>" ><img src="${pageContext.request.contextPath}/resources/img/edit.png" alt="VaSa"></a></td>
      <td><a class="confirm" href="#" onclick="deleteInventario('<%=id%>');" ><img src="${pageContext.request.contextPath}/resources/img/remove.png" alt="VaSa"></a></td>
 
 	</tr>

@@ -2,6 +2,8 @@ package com.nahmens.p001.controller;
 
 import java.sql.SQLException;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,20 +11,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.apache.log4j.Logger;
 
+import com.nahmens.p001.datacontroller.MysqlDataController;
+import com.nahmens.p001.utils.Constants;
+
 @Controller
-public class ActivoController {
+public class ActivoController implements Constants {
 
-	@RequestMapping(value="/a/{hashProyecto}/inventarios/{hashInventario}/activos", method = RequestMethod.GET)
-	public String activosList(@PathVariable long hashProyecto,
-							  @PathVariable long hashInventario,
-							  				ModelMap model) throws SQLException {
+	Logger _logger = Logger.getLogger(ActivoController.class);
 
-		Logger logger = Logger.getLogger(ActivoController.class);
+	/*
+	 * GET ACTIVO 
+	 */
+	@RequestMapping(value="/"+REST_PATH_ACTIVO, method = RequestMethod.GET)
+	public String inventariosReport(@PathVariable(value=PARAMETER_KEY_PROYECTO_NAME)  String name,
+			@PathVariable(value=PARAMETER_KEY_ACTIVO_ID)  String id ,
+			ModelMap model) throws Exception {
+		
+		
+		_logger.debug("Starting "+REST_PATH_REPORT_INVENTARIO);		
 
-		// This request is disabled, because DEBUG < INFO.
-		logger.debug("Starting proyectoList");		
 
-		return "activos";
+		MysqlDataController msqlController = new MysqlDataController();
+		
+		JSONObject activo = msqlController.getActivo(id);
+		
+		JSONArray photos = msqlController.getMediaForInventario(id,"img");
+		
+		JSONArray audios = msqlController.getMediaForInventario(id,"audio");
+		
+		model.addAttribute("activo", activo);
+
+		model.addAttribute("photos", photos);
+
+		model.addAttribute("audios", audios);
+
+		model.addAttribute("id", id);
+
+		return VIEW_ACTIVO; 
+ 
 	}
+	
 
 }

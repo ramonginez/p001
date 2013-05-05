@@ -12,6 +12,7 @@ public interface Constants {
 	// View path
 	public static final String VIEW_PROYECTO ="proyectos";
 	public static final String VIEW_INVENTARIO ="inventarios";
+	public static final String VIEW_ACTIVO ="activos";
 
 
 	// Parameters keys
@@ -25,6 +26,7 @@ public interface Constants {
 	public static final String  PARAMETER_KEY_JSON_RESPONSE_OBJECT ="res";
 	public static final String  PARAMETER_KEY_ACTIVOS ="activos";
 	public static final String  PARAMETER_KEY_ID ="id";
+	public static final String  PARAMETER_KEY_ACTIVO_ID ="aid";
 
 
 	//JSON RESPONSE KEYS
@@ -45,6 +47,7 @@ public interface Constants {
 	public static final String REST_PATH_SEARCH_INVENTARIO 	="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/inventario_search";
 	public static final String REST_PATH_DELETE_INVENTARIO 	="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/inventario_delete";
 	public static final String REST_PATH_REPORT_INVENTARIO 	="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/reporte";
+	public static final String REST_PATH_ACTIVO 			="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/{"+PARAMETER_KEY_ACTIVO_ID+"}";
 
 	
 	
