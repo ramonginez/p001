@@ -15,26 +15,4 @@ $(document).ready(function() {
     }
   });
   
-  //Agregar proyecto
-  
-  $('a.create').click(function(event) {
-
-	    event.preventDefault()
-
-	    var name = $("#create_proyect").val();
-	    
-	    if(name.length>0){
-	    	
-	    	var url = _createLink+ name;
-
-	    	window.location = url;
-
-	    }else{
-	    	
-	    	alert('Este campo no puede ser vacio');
-
-	    }
-	    	
-	    
-	  });
 });

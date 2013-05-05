@@ -1,11 +1,9 @@
-<%@ page import="org.json.JSONArray,org.json.JSONObject"%>
+<%@ page import="org.json.JSONArray,org.json.JSONObject, com.nahmens.p001.utils.Constants"%>
 
 <%
 	org.json.JSONArray proyectos = (JSONArray)request.getAttribute("proyectos");
 	String proyectoPage="/inventario/proyectos/";
 	String removePage="/inventario/remove/proyectos/";
-	String createPage="/inventario/create/proyectos/";
-	String buscarPage="/inventario/buscar/proyectos";
 	
 	
 %>
@@ -15,19 +13,84 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>VaSa</title>
-        <link href="resources/css/style.css" type="text/css" rel="stylesheet">
-        <link href="resources/css/editable.css" type="text/css" rel="stylesheet">
+    <link href="resources/css/style.css" type="text/css" rel="stylesheet">
+    <link href="resources/css/editable.css" type="text/css" rel="stylesheet">
         
 	<script type="text/javascript" src="resources/js/jquery.js"></script>   
     <script type="text/javascript" src="resources/js/editable.js"></script>
     <script type="text/javascript" src="resources/js/actions.js"></script>
-	       
-	 <script>
+	    
+	<script type="text/javascript">
    		var _editLink = "<%=proyectoPage%>";
-  		var _removeLink = "<%=removePage%>";
-  		var _createLink = "<%=createPage%>";
-	</script>
-	       
+	 
+	 	function deleteProject(value){
+	 	
+	 		var confirm_box = confirm('Confirmar eliminar?');
+
+    		if (confirm_box) {
+				$('<form action="<%=Constants.REST_PATH_DELETE_PROYECTO%>" method="POST">' + 
+			    '<input type="hidden" name="<%=Constants.PARAMETER_KEY_PROYECTO_ID%>" value="' + value + '">' +
+			    '</form>').appendTo($(document.body)).submit();
+			}
+		}
+	   	
+	   	function renameProyecto(oldValue,newValue){
+	   		
+	   		if(newValue != null && newValue.replace(/^\s+|\s+$/g,"") != "" && /^[A-Za-z0-9_]{3,20}$/.test(newValue)){
+	   		
+	   			var confirm_box = confirm("Esta seguro de modificar el nombre del proyecto?");
+
+	    		if (confirm_box) {
+					$('<form action="<%=Constants.REST_PATH_EDIT_PROYECTO%>" method="POST">' + 
+				    '<input type="hidden" name="<%=Constants.PARAMETER_KEY_PROYECTO_NAME%>" value="' + oldValue + '">' +
+				    '<input type="hidden" name="<%=Constants.PARAMETER_KEY_PROYECTO_NEW_NAME%>" value="' + newValue + '">' +
+				    '</form>').appendTo($(document.body)).submit();
+				}
+	   		
+	   		}else{
+	   		
+	   			    alert("El nuevo nombre de proyecto es invalido! ");     
+	   			
+	   		}
+	   		
+	   		
+	   	}	
+	   	
+        function submitFormCreate()
+            {
+            	
+
+            	var pname = document.getElementById("<%=Constants.PARAMETER_KEY_PROYECTO_NAME%>");
+            	
+            	if(pname.value == null || trim(pname.value) == ""|| !isAllowedPname(pname.value))
+            	{
+            		alert("Nombre de proyecto invalido! ");            	
+            	}else
+            	{
+        	        
+			        document.createform.submit();
+        	        pname.disabled="disabled";
+        	        
+
+            	}
+
+			}
+			
+			function trim(str) {
+        		return str.replace(/^\s+|\s+$/g,"");
+			}
+			
+			
+			function isAllowedPname(value){
+			
+				//Supports alphabets and numbers no special characters except underscore('_') min 3 and max 20 characters. 			
+				return /^[A-Za-z0-9_]{3,20}$/.test(value);
+			
+
+    		}
+    		
+    	</script>
+            		       
 </head>
 
 <body>
@@ -42,10 +105,10 @@
 	  
 
 	  <div class="search">
-	      <form name="buscar-form" id="buscar-form" action="<%=buscarPage%>" method="get"> 
+	      <form name="buscar-form" id="buscar-form" action="<%=Constants.REST_PATH_SEARCH_PROYECTO%>" method="get"> 
 		      <label for="buscar-proyecto">Buscar:</label>
-		      <input type="text" name="buscar-proyecto" id="buscar-proyecto" />
-		      <input type="submit" name="btn-buscar-proyecto" id="btn-buscar-proyecto" value="Aceptar"/>
+		      <input type="text" name="<%=Constants.PARAMETER_KEY_PROYECTO_SEARCH_KEY%>" id="<%=Constants.PARAMETER_KEY_PROYECTO_SEARCH_KEY%>" />
+		      <input type="submit" name="btn-buscar-proyecto" id="btn-buscar-proyecto" value="Ir"/>
 		  </form>
 		      
 	  </div>
@@ -55,13 +118,16 @@
    </div>
 	  <div class="proyectos-list">
 
-<div class="proyectos-create-box">			
-	<input type="text"  id="create_proyect"> 
-	<a class="create" href="#"><img src="resources/img/add.png" alt="Agregar"></a>
-</div>
-<table width="100%">
-
-<tbody>
+	<div class="proyectos-create-box">	
+		<form name="createform" id="createform" action="<%=Constants.REST_PATH_CREATE_PROYECTO%>" method="POST"> 
+			<input type="text"  id="<%=Constants.PARAMETER_KEY_PROYECTO_NAME%>" name="<%=Constants.PARAMETER_KEY_PROYECTO_NAME%>"> 
+			<input type="button" onclick="javascript: submitFormCreate();" name="btn-create-proyecto" id="btn-create-proyecto" value=""/>
+		</form>
+	</div>
+	
+	<table width="100%">
+	
+	<tbody>
 
 	    	<%if(proyectos!=null){
 
@@ -83,7 +149,7 @@
 
 		        <td><img src="resources/img/semaforo1.gif" alt="verde"></td>
 		        <td><a id="link_<%=i+1%>" href="<%=link%>"><img src="resources/img/edit.png" alt="VaSa"></a></td>
-		        <td><a class="confirm" id="remove_<%=i+1%>" href="<%=remove%>"><img src="resources/img/remove.png" alt="VaSa"></a></td>
+		        <td><a id="remove_<%=i+1%>" href="#" onclick="deleteProject('<%=name%>');" ><img src="resources/img/remove.png" alt="VaSa"></a></td>
   	
 
 <%}}%>

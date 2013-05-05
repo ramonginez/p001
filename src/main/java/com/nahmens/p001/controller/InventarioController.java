@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.apache.log4j.Logger;
 
 @Controller
-public class InventariosController
+public class InventarioController
 {
-	@RequestMapping(value="/proyectos/{hashProyecto}/inventarios", method = RequestMethod.GET)
+	@RequestMapping(value="/i/{hashProyecto}/inventarios", method = RequestMethod.GET)
 	public String inventariosList(@PathVariable long hashProyecto,
 							  				ModelMap model) throws SQLException {
 
-		Logger logger = Logger.getLogger(ActivosController.class);
+		Logger logger = Logger.getLogger(ActivoController.class);
 
 		// This request is disabled, because DEBUG < INFO.
 		logger.debug("Starting proyectoList");		

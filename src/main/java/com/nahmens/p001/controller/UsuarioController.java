@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.apache.log4j.Logger;
 
 @Controller
-public class UsuariosController {
+public class UsuarioController {
 
-	@RequestMapping(value="/usuarios", method = RequestMethod.GET)
+	@RequestMapping(value="/u", method = RequestMethod.GET)
 	public String usuariosList(ModelMap model) throws SQLException {
 
-		Logger logger = Logger.getLogger(UsuariosController.class);
+		Logger logger = Logger.getLogger(UsuarioController.class);
 
 		// This request is disabled, because DEBUG < INFO.
 		logger.debug("Starting proyectoList");		

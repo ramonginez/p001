@@ -312,7 +312,7 @@ public class MysqlDataController {
 			
 			String listOfValues = sb.substring(0, sb.length()-1);
 			
-			String query = "INSERT INTO  `vasa`.`data` (`inventario`,`key`,`value`) VALUES " +
+			String query = "INSERT INTO  `data` (`inventario`,`key`,`value`) VALUES " +
 					"LIST_OF_VALUES on duplicate key update value=values(value)";
 			
 			String newQuery = query.replace("LIST_OF_VALUES", listOfValues);
@@ -361,7 +361,7 @@ public class MysqlDataController {
 			conn = ds.getConnection();
 
 
-			String query = "UPDATE  `vasa`.`data` SET  `data`.`value` = '"+newName+"' " +
+			String query = "UPDATE  `data` SET  `data`.`value` = '"+newName+"' " +
 					"where `data`.`value` = '"+name+"' and `data`.`key` = 'proyecto'";
 
 			Statement s = conn.createStatement();
@@ -393,7 +393,7 @@ public class MysqlDataController {
 			conn = ds.getConnection();
 
 
-			String query = "DELETE FROM `vasa`.`data` WHERE `data`.`inventario` = '"+id+"'";
+			String query = "DELETE FROM `data` WHERE `data`.`inventario` = '"+id+"'";
 
 			Statement s = conn.createStatement();
 
@@ -426,7 +426,7 @@ public class MysqlDataController {
 		    
 			UUID idOne = UUID.randomUUID();
 
-			String query = "INSERT INTO  `vasa`.`data` (`inventario`,`key`,`value`) VALUES ('"+idOne+"','proyecto','"+name+"'),"
+			String query = "INSERT INTO  `data` (`inventario`,`key`,`value`) VALUES ('"+idOne+"','proyecto','"+name+"'),"
 					+"('"+idOne+"','nombre','"+INVENTARIO_PLACE_HOLDER+"')";
 
 			s.executeUpdate (query);

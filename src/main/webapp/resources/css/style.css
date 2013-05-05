@@ -174,6 +174,17 @@ fieldset{
     padding-bottom: 10px;
     width: 23%;
     }
+.proyectos-create-box input[type=button]{
+	    
+  background: url("../img/add.png") no-repeat scroll center center / 15px auto transparent;
+    color: #000000;
+    cursor: pointer;
+    font-weight: bold;
+    height: 23px;
+    padding-bottom: 2px;
+    width: 20px;
+	
+}    
 .proyectos-create-box img{
 	    vertical-align: bottom;
     	width: 23px;
