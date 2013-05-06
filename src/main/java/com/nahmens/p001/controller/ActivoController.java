@@ -18,6 +18,9 @@ import com.nahmens.p001.utils.Constants;
 public class ActivoController implements Constants {
 
 	Logger _logger = Logger.getLogger(ActivoController.class);
+	
+	public static final String NEW_ACTIVO_ID = "@newActivo@";
+
 
 	/*
 	 * GET ACTIVO 
@@ -51,5 +54,40 @@ public class ActivoController implements Constants {
  
 	}
 	
+	
+	/*
+	 * Create ACTIVO 
+	 */
+	@RequestMapping(value="/"+REST_PATH_CREATE_ACTIVO, method = RequestMethod.GET)
+	public String inventariosReport(@PathVariable(value=PARAMETER_KEY_PROYECTO_NAME)  String name,
+			ModelMap model) throws Exception {
+		
+		
+		_logger.debug("Starting "+REST_PATH_CREATE_ACTIVO);		
+		
+		String id = NEW_ACTIVO_ID;
+		
+		JSONObject activo = new JSONObject();
+		
+		activo.put("id", id);
+		
+		activo.put("proyecto", name);
+		
+		JSONArray photos = new JSONArray();
+		
+		JSONArray audios = new JSONArray();
+		
+		model.addAttribute("activo", activo);
+
+		model.addAttribute("photos", photos);
+
+		model.addAttribute("audios", audios);
+
+		model.addAttribute("id", id);
+
+		return VIEW_ACTIVO;
+ 
+ 
+	}
 
 }

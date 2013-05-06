@@ -48,6 +48,7 @@ public interface Constants {
 	public static final String REST_PATH_DELETE_INVENTARIO 	="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/inventario_delete";
 	public static final String REST_PATH_REPORT_INVENTARIO 	="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/reporte";
 	public static final String REST_PATH_ACTIVO 			="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/{"+PARAMETER_KEY_ACTIVO_ID+"}";
+	public static final String REST_PATH_CREATE_ACTIVO 		="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/activo_create";
 
 	
 	

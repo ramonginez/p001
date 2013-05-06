@@ -7,12 +7,13 @@
 	
 	String excel ="/inventario/reporte/"+project;
 	String removePage="/inventario/remove/activo/";
-	String createActivoPage="/inventario/create/activo/"+project;
 						
 	String buscarActivoPage = Constants.REST_PATH_SEARCH_INVENTARIO.replace("{"+Constants.PARAMETER_KEY_PROYECTO_NAME+"}", project);
 	String deleteInventario = Constants.REST_PATH_DELETE_INVENTARIO.replace("{"+Constants.PARAMETER_KEY_PROYECTO_NAME+"}", project);
 	String reporteInventario = Constants.REST_PATH_REPORT_INVENTARIO.replace("{"+Constants.PARAMETER_KEY_PROYECTO_NAME+"}", project);
 	String activosPage= Constants.REST_PATH_ACTIVO.replace("{"+Constants.PARAMETER_KEY_PROYECTO_NAME+"}", project);
+	String createActivoPage=Constants.REST_PATH_CREATE_ACTIVO.replace("{"+Constants.PARAMETER_KEY_PROYECTO_NAME+"}", project);
+
 %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -39,6 +40,7 @@
 		}
 		
 		
+		
     		
     </script>
 
@@ -61,7 +63,7 @@
 	    </form>
     </div>
      <div>
-      <a href="<%=createActivoPage%>"><img src="${pageContext.request.contextPath}/resources/img/add.png" alt="Agregar"></a>
+      <a  href="${pageContext.request.contextPath}/<%=createActivoPage%>"><img src="${pageContext.request.contextPath}/resources/img/add.png" alt="Agregar"></a>
     </div>
     <div><a href="${pageContext.request.contextPath}/<%=reporteInventario%>"><img src="${pageContext.request.contextPath}/resources/img/excel.png" alt="Reporte"></a>
   </div>
