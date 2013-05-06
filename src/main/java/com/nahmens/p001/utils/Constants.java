@@ -13,7 +13,9 @@ public interface Constants {
 	public static final String VIEW_PROYECTO ="proyectos";
 	public static final String VIEW_INVENTARIO ="inventarios";
 	public static final String VIEW_ACTIVO ="activos";
-
+	public static final String VIEW_AUDIO ="audio";
+	public static final String VIEW_PHOTO ="photo";
+	
 
 	// Parameters keys
 	public static final String  PARAMETER_KEY_PROYECTO_NAME ="name";
@@ -27,6 +29,7 @@ public interface Constants {
 	public static final String  PARAMETER_KEY_ACTIVOS ="activos";
 	public static final String  PARAMETER_KEY_ID ="id";
 	public static final String  PARAMETER_KEY_ACTIVO_ID ="aid";
+	public static final String  PARAMETER_KEY_DATA ="data";
 
 
 	//JSON RESPONSE KEYS
@@ -49,8 +52,11 @@ public interface Constants {
 	public static final String REST_PATH_REPORT_INVENTARIO 	="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/reporte";
 	public static final String REST_PATH_ACTIVO 			="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/{"+PARAMETER_KEY_ACTIVO_ID+"}";
 	public static final String REST_PATH_CREATE_ACTIVO 		="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/activo_create";
+	public static final String REST_PATH_SAVE_ACTIVO 		="proyecto/{"+PARAMETER_KEY_PROYECTO_NAME+"}/activo_save";
 
-	
+	public static final String REST_PATH_MEDIA_AUDIO 		="media/audio/{"+PARAMETER_KEY_ID+"}";
+	public static final String REST_PATH_MEDIA_IMG			="media/image/{"+PARAMETER_KEY_ID+"}";
+
 	
 
 }
