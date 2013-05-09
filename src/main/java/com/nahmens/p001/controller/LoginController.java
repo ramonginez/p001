@@ -1,6 +1,7 @@
 package com.nahmens.p001.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +47,8 @@ public class LoginController {
 		// This request is disabled, because DEBUG < INFO.
 		logger.debug("Starting logout");		
 		
+		SecurityContextHolder.getContext().setAuthentication(null);
+
 		return "login";
  
 	}

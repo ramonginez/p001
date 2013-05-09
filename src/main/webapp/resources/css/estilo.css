@@ -1,0 +1,121 @@
+body{color: darkgrey;font-family: verdana;font-size: 9pt;font-weight: bold;}
+
+.header > img{ height: 100px; padding: 25px; width: 150px;}
+
+
+.list  li{padding: 10px; background-color: lightgray;margin-left: auto;    margin-right: auto;    width: 80%;}
+A:link {text-decoration: underline;color: gray;}
+A:visited {text-decoration: underline;color: gray;}
+A:active {text-decoration: underline;color: gray;}
+A:hover {text-decoration: none; color: black;}
+
+h2{ text-align: center;}
+.back{padding-right: 10%;text-align: right;}
+
+.media >li
+{
+	display: inline;
+	list-style-type: none;
+
+}
+.media img
+{
+	padding:10px;
+}
+.media
+{
+	margin-left: auto;
+	margin-right: auto;	
+	width: 85%;
+}
+.media A
+{
+	padding:10px;
+}
+.container{
+	
+  margin-left: auto;
+    margin-right: auto;
+    width: 95%;	
+}
+.container div{
+	
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    width: 200px;
+	
+}
+.container-text{
+	
+   margin-left: auto;
+    margin-right: auto;
+    width: 50%;	
+}
+
+input[type=submit]{
+	background-color: lightsteelblue;
+  	color: black;
+ 	height: 45px;
+	width: 250px;
+}
+.logout{
+ margin-left: auto;
+    width: 9%;	
+}
+.line{
+ background-color: lightgray;
+    height: 1.7px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;	
+}
+form{
+	margin:0;
+}
+
+#linkReporte{
+	text-align: right;
+    width: 95%;
+}
+
+/*Header TABS*/
+
+.tabs-container{
+	border-bottom: 1px solid;
+	border-width: 1px;
+	height: 24px;
+	width: 100%;
+	border-color: #949494;
+	padding-bottom: 0;
+}
+
+.tabs-container ul{margin:0 }
+
+.tabs-container li{
+	background-image: url("resources/img/tab-bg.gif");
+    background-repeat: no-repeat;
+    float: left;
+    list-style-type: none;
+    position: relative;
+    text-align: center;
+    width: 146px;
+}
+    
+.tabs-container a {
+	display: block;
+	text-decoration: none;
+	color: #000;
+	padding-top: 4px;
+	padding-right: 40px;
+	padding-bottom: 5px;
+	padding-left: 40px;
+}
+.tabs-container .tab-active {
+	background-image: url("resources/img/tab-active-bg.gif");
+}
+
+#logout{ 
+	float: right;
+	width: 150px;  
+}
