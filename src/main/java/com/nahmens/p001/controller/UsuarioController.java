@@ -117,4 +117,37 @@ public class UsuarioController implements Constants {
 		return "redirect:/"+REST_PATH_ADMIN_SETTING;
 
 	}
+	
+	
+	@RequestMapping(value="/"+REST_PATH_ADMIN_USER_CREATE, method = RequestMethod.POST)
+	public String adminUsuariosCreate(@RequestParam(PARAMETER_KEY_USUARIO_UNAME)  String name, @RequestParam(PARAMETER_KEY_USUARIO_PWD)  String pwd,ModelMap model) throws SQLException, JSONException {
+
+		Logger logger = Logger.getLogger(UsuarioController.class);
+
+		// This request is disabled, because DEBUG < INFO.
+		logger.debug("adminUsuariosCreate");	
+
+		//TODO REAL TRANSACTION 
+		logger.debug("name:"+name + "---"+pwd);	
+
+		
+		return "redirect:/"+REST_PATH_ADMIN_SETTING;
+
+	}
+
+	@RequestMapping(value="/"+REST_PATH_ADMIN_USER_DELETE, method = RequestMethod.POST)
+	public String adminUsuariosDelete(@RequestParam(PARAMETER_KEY_USUARIO_ID)  String id, ModelMap model) throws SQLException, JSONException {
+
+		Logger logger = Logger.getLogger(UsuarioController.class);
+
+		// This request is disabled, because DEBUG < INFO.
+		logger.debug("adminUsuariosCreate");	
+
+		//TODO REAL TRANSACTION 
+		logger.debug("adminUsuariosDelete:"+id );	
+
+		
+		return "redirect:/"+REST_PATH_ADMIN_SETTING;
+
+	}
 }
