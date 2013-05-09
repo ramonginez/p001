@@ -2,7 +2,9 @@
 
 <%
 
-	String changePwdPage = Constants.REST_PATH_UPDATE_USUARIO;
+	String changePwdPage = Constants.REST_PATH_ADMIN_SETTING_UPDATE;
+	
+	org.json.JSONArray userList = (JSONArray)request.getAttribute(Constants.PARAMETER_KEY_USER_LIST);	
 	
 %>
 
@@ -13,38 +15,32 @@
 	<title>VaSa</title>
     <link href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css" rel="stylesheet">
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>  
-	<script type="text/javascript" src="resources/js/setting.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/setting.js"></script>
 	
 	<script type="text/javascript">
 	 
-	 	function cambio(){
+	 	function cambio(id, pos){
 	 	
 	 		var confirm_box = confirm('Confirma el cambio de la nueva clave?');
 
     		if (confirm_box) {
+		
+		
+	 			var domId="pwd_input_"+pos;		
 				
-				var pwd = document.getElementById("current-pwd");
+				var newPwd = document.getElementById(domId);
 
-            	var newPwd = document.getElementById("new-pwd");
-            	
-            	var confirmPwd = document.getElementById("confirm-new-pwd");
-            	
-            	if(pwd.value == null || trim(pwd.value) == "")
-            	{
-            		alert("Debe insertar la clave actual");       
-            		     	
-            	}else if(newPwd.value == null || trim(newPwd.value) == "" || !isAllowedPwd(newPwd.value))
+            	if(newPwd.value == null || trim(newPwd.value) == "" || !isAllowedPwd(newPwd.value))
             	{
             		alert("La nueva clave no cumple los requerimientos. Debe tener entre 6 y 20 caracteres. ");       
             		
-            	}else if(confirmPwd.value == null || confirmPwd.value != newPwd.value)
-            	{
-            		alert("Error al confirmar la clave");       
-            		
             	}else{
         	        
-			        document.pwdform.submit();        	        
-
+					$('<form action="${pageContext.request.contextPath}/<%=changePwdPage%>" method="POST">' + 
+				    '<input type="hidden" name="<%=Constants.PARAMETER_KEY_USUARIO_ID%>" value="' + id + '">' +
+				    '<input type="hidden" name="<%=Constants.PARAMETER_KEY_USUARIO_PWD%>" value="' + newPwd.value + '">' +
+				    
+				    '</form>').appendTo($(document.body)).submit();
             	}
 
 				
@@ -78,30 +74,45 @@
 
 <div class="wrap">
   <h1>Admin Settings</h1>
-  <form name="pwdform" id="pwdform" action="${pageContext.request.contextPath}/<%=changePwdPage%>" method="post"> 
-  
-  <fieldset class="container-text" id="activo">
-				<legend>Cambio de clave</legend>
-				<div>
-					<label current-pwd">Clave actual:</label></br>
-					<input maxlength="25" type="password" name="current-pwd" id="current-pwd" /></br>
-				</div>
-				<div>
-					<label for="current-pwd">Clave nueva:</label></br>
-					<input maxlength="25" type="password" name="new-pwd" id="new-pwd" /></br>
-				</div>
-				<div>
-					<label for="current-pwd">Confirmar clave nueva:</label></br>
-					<input maxlength="25" type="password" name="confirm-new-pwd" id ="confirm-new-pwd"/></br>
-				</div>
-				
-		   </fieldset>
-		   
-		   <div class="salvar">
-		      <input type="button" onclick="javascript: cambio();"  value="Cambiar clave"/>
-			</div>
 
-	    </form>
+	<table width="100%">
+	
+	<tbody>
+
+	    	<%if(userList!=null){
+
+				for(int i = 0; i < userList.length(); i++){
+
+		        	String idUser = userList.getJSONObject(i).getString(Constants.USER_LIST_JSON_KEY_ID);
+	
+		        	String name = userList.getJSONObject(i).getString(Constants.USER_LIST_JSON_KEY_UNAME);
+					
+			%>
+
+  
+	<tr  bgcolor="#f2f2f2" class="edit_tr">
+
+		<td id="<%=i+1%>"  width="50%" class="edit_td">
+			<%=name%>
+		</td>
+	
+		 <td>
+		 	<input type="password" id="pwd_input_<%=i+1%>">
+		 </td>
+
+		 <td>
+		 		<a id="btn_<%=i+1%>" href="#" onclick="cambio('<%=idUser%>','<%=i+1%>');" >
+		 			<img src="${pageContext.request.contextPath}/resources/img/edit.png" alt="Cambiar">
+		 		</a>
+		 </td>
+  	
+
+<%}}%>
+
+
+
+</tbody></table>
+
  	</div> 
 </body>
 </html>
