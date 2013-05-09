@@ -4,6 +4,8 @@
 
 	String changePwdPage = Constants.REST_PATH_UPDATE_USUARIO;
 	
+	Object err = request.getAttribute(Constants.PARAMETER_KEY_ERROR);
+	
 %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -23,9 +25,9 @@
 
     		if (confirm_box) {
 				
-				var pwd = document.getElementById("current-pwd");
+				var pwd = document.getElementById("<%=Constants.PARAMETER_KEY_USUARIO_OLD_PWD%>");
 
-            	var newPwd = document.getElementById("new-pwd");
+            	var newPwd = document.getElementById("<%=Constants.PARAMETER_KEY_USUARIO_PWD%>");
             	
             	var confirmPwd = document.getElementById("confirm-new-pwd");
             	
@@ -66,6 +68,11 @@
 			
 
     		}	
+
+<%if(err!=null){%>
+alert('<%=(String)err%>');
+<%}%>
+			
 			
     		
     </script>
@@ -76,6 +83,7 @@
 	
 	<%@ include file="header.jsp" %>
 
+
 <div class="wrap">
   <h1>Setting</h1>
   <form name="pwdform" id="pwdform" action="${pageContext.request.contextPath}/<%=changePwdPage%>" method="post"> 
@@ -84,11 +92,11 @@
 				<legend>Cambio de clave</legend>
 				<div>
 					<label current-pwd">Clave actual:</label></br>
-					<input maxlength="25" type="password" name="current-pwd" id="current-pwd" /></br>
+					<input maxlength="25" type="password" name="<%=Constants.PARAMETER_KEY_USUARIO_OLD_PWD%>" id="<%=Constants.PARAMETER_KEY_USUARIO_OLD_PWD%>" /></br>
 				</div>
 				<div>
 					<label for="current-pwd">Clave nueva:</label></br>
-					<input maxlength="25" type="password" name="new-pwd" id="new-pwd" /></br>
+					<input maxlength="25" type="password" name="<%=Constants.PARAMETER_KEY_USUARIO_PWD%>" id="<%=Constants.PARAMETER_KEY_USUARIO_PWD%>" /></br>
 				</div>
 				<div>
 					<label for="current-pwd">Confirmar clave nueva:</label></br>

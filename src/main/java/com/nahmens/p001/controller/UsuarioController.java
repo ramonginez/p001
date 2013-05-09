@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,75 +35,6 @@ public class UsuarioController implements Constants
 		this.userDAO = userDAO;
 	}
 
-	@RequestMapping(value="/usuarios", method = RequestMethod.GET)
-	public String listAllUsers(ModelMap model)
-	{
-		Logger logger = Logger.getLogger(UsuariosController.class);
-		logger.debug("listing all users...");
-		
-		JSONArray usersList = this.userDAO.findAllUsers();
-		
-		model.addAttribute("usersList", usersList);
-		
-		logger.debug("all users listed...");
-		
-		return "usuarios";
-	}
-
-	@RequestMapping(value="/usuarios", method = RequestMethod.POST)
-	public String newUser(JSONObject user, ModelMap model)
-	{
-		Logger logger = Logger.getLogger(UsuariosController.class);
-		logger.debug("saving user...");
-		
-		int result = this.userDAO.saveUser(user);
-		
-		logger.debug("user saved...");
-		
-		return "usuarios";
-	}
-
-	@RequestMapping(value="/usuarios/{hashUser}", method = RequestMethod.GET)
-	public String getUser(@PathVariable String hashUser, ModelMap model)
-	{
-		Logger logger = Logger.getLogger(UsuariosController.class);
-		logger.debug("finding user...");
-		
-		JSONObject user = this.userDAO.findUser(hashUser);
-		
-		model.addAttribute("user", user);
-		
-		logger.debug("user found...");
-		
-		return "usuarios";
-	}
-
-	@RequestMapping(value="/usuarios/update", method = RequestMethod.POST)
-	public String updateUser(JSONObject user, ModelMap model)
-	{
-		Logger logger = Logger.getLogger(UsuariosController.class);
-		logger.debug("updating user...");
-		
-		int result = this.userDAO.updateUser(user);
-		
-		logger.debug("user updated...");
-		
-		return "usuarios";
-	}
-
-	@RequestMapping(value="/usuarios/delete/{hashUser}", method = RequestMethod.POST)
-	public String deleteUser(@PathVariable String hashUser, ModelMap model)
-	{
-		Logger logger = Logger.getLogger(UsuariosController.class);
-		logger.debug("deleting user...");
-		
-		int result = this.userDAO.deleteUser(hashUser);
-		
-		logger.debug("user deleted...");
-		
-		return "usuarios";
-	}
-	
 
 	@RequestMapping(value="/"+REST_PATH_SETTING, method = RequestMethod.GET)
 	public String usuariosShow(ModelMap model) throws SQLException {
@@ -112,41 +44,62 @@ public class UsuarioController implements Constants
 		// This request is disabled, because DEBUG < INFO.
 		logger.debug("usuariosShow");		
 
-		
-	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	      
-	    Collection<GrantedAuthority> authority = auth.getAuthorities();
-	    
-	    for (GrantedAuthority granted : authority) {
 
-            if (granted.getAuthority().equalsIgnoreCase(ROLE_ADMIN)) {
-            	
-            	
-        		logger.debug("Admin Request");
-        		
-        		return "redirect:/"+REST_PATH_ADMIN_SETTING;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		Collection<GrantedAuthority> authority = auth.getAuthorities();
+
+		for (GrantedAuthority granted : authority) {
+
+			if (granted.getAuthority().equalsIgnoreCase(ROLE_ADMIN)) {
 
 
-            }
-        
-	    }
-		
-	 		
+				logger.debug("Admin Request");
+
+				return "redirect:/"+REST_PATH_ADMIN_SETTING;
+
+
+			}
+
+		}
+
+
 		return VIEW_USUARIOS;
 	}
 
 	@RequestMapping(value="/"+REST_PATH_UPDATE_USUARIO, method = RequestMethod.POST)
-	public String usuariosUpdate(ModelMap model) throws SQLException {
+	public String usuariosUpdate(@RequestParam(PARAMETER_KEY_USUARIO_OLD_PWD)  String oldPwd, @RequestParam(PARAMETER_KEY_USUARIO_PWD)  String pwd,ModelMap model) throws SQLException, JSONException {
 
 		Logger logger = Logger.getLogger(UsuarioController.class);
 
 		// This request is disabled, because DEBUG < INFO.
 		logger.debug("usuariosUpdate");		
 
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		String currentPwd = user.getPassword();
+
+		if((currentPwd==null)
+				||(!currentPwd.equals(oldPwd))){
+			
+			model.addAttribute(PARAMETER_KEY_ERROR, "La clave actual es invalida");
+
+			return VIEW_USUARIOS;
+
+		}
+		
+		JSONObject jUser = new JSONObject();
+
+		jUser.put(UsuarioDAO.JSON_KEY_USERNAME, user.getUsername());
+		
+		jUser.put(UsuarioDAO.JSON_KEY_PASSWORD, pwd);
+		
+		this.userDAO.updateUser(jUser);
+		
 		return "redirect:/"+REST_PATH_SETTING;
 	}
 
-	
+
 	@RequestMapping(value="/"+REST_PATH_ADMIN_SETTING, method = RequestMethod.GET)
 	public String adminUsuariosShow(ModelMap model) throws SQLException, JSONException {
 
@@ -154,52 +107,41 @@ public class UsuarioController implements Constants
 
 		// This request is disabled, because DEBUG < INFO.
 		logger.debug("adminUsuariosShow");		
-	   
-		
-		//TODO Change with real data.
-		
-		JSONArray userList = new JSONArray();
-		
-		JSONObject tmpUser = new JSONObject();
-		
-		tmpUser.put(USER_LIST_JSON_KEY_ID, "100");
-		tmpUser.put(USER_LIST_JSON_KEY_UNAME, "ramon");
-		
-		userList.put(tmpUser);
 
-		tmpUser = new JSONObject();
-		tmpUser.put(USER_LIST_JSON_KEY_ID, "101");
-		tmpUser.put(USER_LIST_JSON_KEY_UNAME, "juan");
-		userList.put(tmpUser);
+		JSONArray userList = this.userDAO.findAllUsers();
 
-		tmpUser = new JSONObject();
-		tmpUser.put(USER_LIST_JSON_KEY_ID, "102");
-		tmpUser.put(USER_LIST_JSON_KEY_UNAME, "felix");
-		userList.put(tmpUser);
 
 		model.addAttribute(PARAMETER_KEY_USER_LIST, userList);
 
 		return VIEW_USUARIOS_ADMIN;
 	}
-	
-	
+
+
 	@RequestMapping(value="/"+REST_PATH_ADMIN_SETTING_UPDATE, method = RequestMethod.POST)
-	public String adminUsuariosUpdate(@RequestParam(PARAMETER_KEY_USUARIO_ID)  String uid, @RequestParam(PARAMETER_KEY_USUARIO_PWD)  String pwd,ModelMap model) throws SQLException, JSONException {
+	public String adminUsuariosUpdate(@RequestParam(PARAMETER_KEY_USUARIO_UNAME)  String name, @RequestParam(PARAMETER_KEY_USUARIO_PWD)  String pwd,ModelMap model) throws SQLException, JSONException {
 
 		Logger logger = Logger.getLogger(UsuarioController.class);
 
 		// This request is disabled, because DEBUG < INFO.
 		logger.debug("adminUsuariosUpdate");	
 
-		//TODO REAL TRANSACTION 
-		logger.debug("uid:"+uid + "---"+pwd);	
+		logger.debug("updating user...");
 
-		
+		JSONObject user = new JSONObject();
+
+		user.put(UsuarioDAO.JSON_KEY_USERNAME, name);
+
+		user.put(UsuarioDAO.JSON_KEY_PASSWORD, pwd);
+
+		this.userDAO.updateUser(user);
+
+		logger.debug("user updated...");
+
 		return "redirect:/"+REST_PATH_ADMIN_SETTING;
 
 	}
-	
-	
+
+
 	@RequestMapping(value="/"+REST_PATH_ADMIN_USER_CREATE, method = RequestMethod.POST)
 	public String adminUsuariosCreate(@RequestParam(PARAMETER_KEY_USUARIO_UNAME)  String name, @RequestParam(PARAMETER_KEY_USUARIO_PWD)  String pwd,ModelMap model) throws SQLException, JSONException {
 
@@ -208,10 +150,18 @@ public class UsuarioController implements Constants
 		// This request is disabled, because DEBUG < INFO.
 		logger.debug("adminUsuariosCreate");	
 
-		//TODO REAL TRANSACTION 
-		logger.debug("name:"+name + "---"+pwd);	
+		logger.debug("saving user...");
 
-		
+		JSONObject user = new JSONObject();
+
+		user.put(UsuarioDAO.JSON_KEY_USERNAME, name);
+
+		user.put(UsuarioDAO.JSON_KEY_PASSWORD, pwd);
+
+		this.userDAO.saveUser(user);
+
+		logger.debug("saving done");
+
 		return "redirect:/"+REST_PATH_ADMIN_SETTING;
 
 	}
@@ -221,13 +171,14 @@ public class UsuarioController implements Constants
 
 		Logger logger = Logger.getLogger(UsuarioController.class);
 
-		// This request is disabled, because DEBUG < INFO.
-		logger.debug("adminUsuariosCreate");	
+		logger.debug("adminUsuariosDelete");	
 
-		//TODO REAL TRANSACTION 
-		logger.debug("adminUsuariosDelete:"+id );	
+		logger.debug("deleting user...");
 
-		
+		this.userDAO.deleteUser(id);
+
+		logger.debug("user deleted...");
+
 		return "redirect:/"+REST_PATH_ADMIN_SETTING;
 
 	}

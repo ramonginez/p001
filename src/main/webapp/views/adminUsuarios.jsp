@@ -1,4 +1,4 @@
-<%@ page import="org.json.JSONArray,org.json.JSONObject, com.nahmens.p001.utils.Constants"%>
+<%@ page import="org.json.JSONArray,org.json.JSONObject, com.nahmens.p001.utils.Constants, com.nahmens.p001.model.dao.UsuarioDAO"%>
 
 <%
 
@@ -23,7 +23,7 @@
 	
 	<script type="text/javascript">
 	 
-	 	function cambio(id, pos){
+	 	function cambio(name, pos){
 	 	
 	 		var confirm_box = confirm('Confirma el cambio de la nueva clave?');
 
@@ -41,7 +41,7 @@
             	}else{
         	        
 					$('<form action="${pageContext.request.contextPath}/<%=changePwdPage%>" method="POST">' + 
-				    '<input type="hidden" name="<%=Constants.PARAMETER_KEY_USUARIO_ID%>" value="' + id + '">' +
+				    '<input type="hidden" name="<%=Constants.PARAMETER_KEY_USUARIO_UNAME%>" value="' + name + '">' +
 				    '<input type="hidden" name="<%=Constants.PARAMETER_KEY_USUARIO_PWD%>" value="' + newPwd.value + '">' +
 				    
 				    '</form>').appendTo($(document.body)).submit();
@@ -157,9 +157,9 @@
 
 				for(int i = 0; i < userList.length(); i++){
 
-		        	String idUser = userList.getJSONObject(i).getString(Constants.USER_LIST_JSON_KEY_ID);
+		        	String idUser = userList.getJSONObject(i).getString(UsuarioDAO.JSON_KEY_ID);
 	
-		        	String name = userList.getJSONObject(i).getString(Constants.USER_LIST_JSON_KEY_UNAME);
+		        	String name = userList.getJSONObject(i).getString(UsuarioDAO.JSON_KEY_USERNAME);
 					
 			%>
 
@@ -175,7 +175,7 @@
 		 </td>
 
 		 <td>
-		 		<a id="btn_<%=i+1%>" href="#" onclick="cambio('<%=idUser%>','<%=i+1%>');" >
+		 		<a id="btn_<%=i+1%>" href="#" onclick="cambio('<%=name%>','<%=i+1%>');" >
 		 			<img src="${pageContext.request.contextPath}/resources/img/edit.png" alt="Cambiar clave">
 		 		</a>
 		 </td>
