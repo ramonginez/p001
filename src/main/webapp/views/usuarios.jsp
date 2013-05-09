@@ -87,7 +87,7 @@
 					<input maxlength="25" type="password" name="current-pwd" id="current-pwd" /></br>
 				</div>
 				<div>
-					<label for="current-pwd">Confirmar clave nueva:</label></br>
+					<label for="current-pwd">Clave nueva:</label></br>
 					<input maxlength="25" type="password" name="new-pwd" id="new-pwd" /></br>
 				</div>
 				<div>
