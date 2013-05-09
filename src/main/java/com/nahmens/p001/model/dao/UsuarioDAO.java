@@ -11,7 +11,9 @@ public interface UsuarioDAO {
 	
 	public JSONArray findAllUsers();
 	public int saveUser(JSONObject u);
-	public JSONObject findUser(String userId);
+	public JSONObject findUserByUserName(String uname);
 	public int updateUser(JSONObject u);
-	public int deleteUser(String userId);
+	public int setUserAvailability(String userId, int status);
+	
+
 }

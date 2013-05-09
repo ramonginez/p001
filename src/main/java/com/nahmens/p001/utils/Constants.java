@@ -12,6 +12,7 @@ public interface Constants {
 	public static final String REST_PATH_ADMIN_SETTING_UPDATE ="admin/usuario_update";
 	public static final String REST_PATH_ADMIN_USER_CREATE ="admin/usuario_create";	
 	public static final String REST_PATH_ADMIN_USER_DELETE ="admin/usuario_delete";
+	public static final String REST_PATH_ADMIN_USER_ACTIVATE ="admin/usuario_activate";
 
 	// View path
 	public static final String VIEW_PROYECTO ="proyectos";
@@ -43,6 +44,8 @@ public interface Constants {
 	public static final String  PARAMETER_KEY_USUARIO_UNAME ="uname";
 	public static final String  PARAMETER_KEY_ERROR ="error";
 
+	public static final String  PARAMETER_KEY_ERROR_CODE_USUARIO_EXISTENTE ="1";
+	public static final String  PARAMETER_KEY_ERROR_MSG_USUARIO_EXISTENTE ="Error al crear usuario: El nombre de usuario ha sido registrado en el sistema previamente";
 
 
 	//JSON RESPONSE KEYS

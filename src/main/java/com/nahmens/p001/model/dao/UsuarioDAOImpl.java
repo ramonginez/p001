@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.UUID;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -42,15 +43,10 @@ public class UsuarioDAOImpl implements UsuarioDAO
 
 			try
 			{
-				String sql = "select * from web_users";
+				String sql = "select * from web_users where ENABLED=1";
 				PreparedStatement myStatement = myConn.prepareStatement(sql);
 				ResultSet myRs = myStatement.executeQuery();
-				ResultSetMetaData rsmd = myRs.getMetaData();
 
-				int i = rsmd.getColumnCount();
-				for (int j = 1; j <= i; j++) {
-					System.out.println(rsmd.getColumnName(j));
-				}
 				while (myRs.next())
 				{
 					JSONObject user = new JSONObject();
@@ -85,12 +81,39 @@ public class UsuarioDAOImpl implements UsuarioDAO
 
 			try
 			{
-				String sql = "insert into web_users (username, password) values (?, ?)";
-				PreparedStatement myStatement = myConn.prepareStatement(sql);
-				myStatement.setString(1, u.getString(JSON_KEY_USERNAME));
-				myStatement.setString(2, u.getString(JSON_KEY_PASSWORD));
-				result = myStatement.executeUpdate();
+				
+				Statement s = myConn.createStatement();
+							    
+				String query = "insert into web_users (username, password, enabled) " +
+						"values ('"+u.getString(JSON_KEY_USERNAME)+"','"+u.getString(JSON_KEY_PASSWORD)+"',1)";
+					
+				s.executeUpdate(query);
+				
+				ResultSet rs = s.getGeneratedKeys();
 
+				if (rs.next()) {
+					
+					int id =rs.getInt(1);
+					
+					String queryRole = "insert into user_roles (USER_ID, AUTHORITY) " +
+							"values ("+id+",'ROLE_USER')";
+				
+					s.executeUpdate(queryRole);
+
+					if (rs != null) {
+						rs.close(); // close result set
+					}
+
+					
+				}
+				
+				if (s != null) {
+					s.close(); // close statement
+				}
+					
+				s.close();
+
+				
 			} catch (SQLException sqlE) {
 				sqlE.printStackTrace();
 			}
@@ -106,10 +129,9 @@ public class UsuarioDAOImpl implements UsuarioDAO
 		return result;
 	}
 
-	public JSONObject findUser(String userId)
+	public JSONObject findUserByUserName(String uname)
 	{
 		Connection myConn = null;
-		JSONObject user = null;
 
 		try
 		{
@@ -117,17 +139,18 @@ public class UsuarioDAOImpl implements UsuarioDAO
 
 			try
 			{
-				String sql = "select * from web_users where user_id = ?";
+				String sql = "select * from web_users where username='"+uname+"'";
 				PreparedStatement myStatement = myConn.prepareStatement(sql);
-				myStatement.setString(1, userId);
 				ResultSet myRs = myStatement.executeQuery();
-
-				if (myRs.next())
+				
+				if(myRs.next())
 				{
-					user = new JSONObject();
+					JSONObject user = new JSONObject();
 					user.put(JSON_KEY_ID, myRs.getLong(1));
-					user.put(JSON_KEY_USERNAME, myRs.getLong(2));
-					user.put(JSON_KEY_PASSWORD, myRs.getLong(3));
+					user.put(JSON_KEY_USERNAME, myRs.getString(2));
+					//user.put(JSON_KEY_PASSWORD, myRs.getString(3));
+
+					return user;
 				}
 			} catch (SQLException sqlE) {
 				sqlE.printStackTrace();
@@ -141,7 +164,8 @@ public class UsuarioDAOImpl implements UsuarioDAO
 				e.printStackTrace();
 			}
 		}
-		return user;
+		return null;
+
 	}
 
 	public int updateUser(JSONObject u)
@@ -178,7 +202,7 @@ public class UsuarioDAOImpl implements UsuarioDAO
 		return result;
 	}
 
-	public int deleteUser(String userId)
+	public int setUserAvailability(String userId,int status)
 	{
 		Connection myConn = null;
 		int result = 0;
@@ -188,11 +212,16 @@ public class UsuarioDAOImpl implements UsuarioDAO
 
 			try
 			{
-				String sql = "update web_users set enabled = '?' where user_id = ?";
-				PreparedStatement myStatement = myConn.prepareStatement(sql);
-				myStatement.setString(1, "false");
-				myStatement.setString(2, userId);
-				result = myStatement.executeUpdate();
+				
+
+				String query = "UPDATE  web_users set `enabled` = "+ status +
+						" where user_id = '"+userId+"' ";
+
+				Statement s = myConn.createStatement();
+
+				s.executeUpdate (query);
+				
+				
 
 			} catch (SQLException sqlE) {
 				sqlE.printStackTrace();
@@ -208,5 +237,7 @@ public class UsuarioDAOImpl implements UsuarioDAO
 		}
 		return result;
 	}
+
+	
 
 }

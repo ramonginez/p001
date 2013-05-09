@@ -8,6 +8,19 @@
 	
 	String deleteUserPage = Constants.REST_PATH_ADMIN_USER_DELETE;
 	
+	Object errCode = request.getAttribute(Constants.PARAMETER_KEY_ERROR);
+	
+	String errMsg=null;
+	
+	if(errCode!=null){
+	
+		if( ((String)errCode).equals(Constants.PARAMETER_KEY_ERROR_CODE_USUARIO_EXISTENTE) ){
+		
+			errMsg=Constants.PARAMETER_KEY_ERROR_MSG_USUARIO_EXISTENTE;
+		}
+	}
+	
+	
 	org.json.JSONArray userList = (JSONArray)request.getAttribute(Constants.PARAMETER_KEY_USER_LIST);	
 	
 %>
@@ -114,7 +127,9 @@
 			}
     		
     		 
-			
+			<%if(errMsg!=null){%>
+				alert('<%=errMsg%>');
+			<%}%>
     		
     </script>
 	

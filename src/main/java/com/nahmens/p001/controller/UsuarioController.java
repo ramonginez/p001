@@ -2,20 +2,16 @@ package com.nahmens.p001.controller;
 
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Iterator;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -95,18 +91,25 @@ public class UsuarioController implements Constants
 		jUser.put(UsuarioDAO.JSON_KEY_PASSWORD, pwd);
 		
 		this.userDAO.updateUser(jUser);
-		
-		return "redirect:/"+REST_PATH_SETTING;
+				
+		return "redirect:/"+REST_PATH_LOGOUT;
 	}
 
 
 	@RequestMapping(value="/"+REST_PATH_ADMIN_SETTING, method = RequestMethod.GET)
-	public String adminUsuariosShow(ModelMap model) throws SQLException, JSONException {
+	public String adminUsuariosShow(@RequestParam(value = PARAMETER_KEY_ERROR, required=false)  String err, ModelMap model) throws SQLException, JSONException {
 
 		Logger logger = Logger.getLogger(UsuarioController.class);
 
 		// This request is disabled, because DEBUG < INFO.
 		logger.debug("adminUsuariosShow");		
+
+		
+		if(err !=null){
+			
+			model.addAttribute(PARAMETER_KEY_ERROR, err);
+
+		}
 
 		JSONArray userList = this.userDAO.findAllUsers();
 
@@ -147,17 +150,26 @@ public class UsuarioController implements Constants
 
 		Logger logger = Logger.getLogger(UsuarioController.class);
 
-		// This request is disabled, because DEBUG < INFO.
 		logger.debug("adminUsuariosCreate");	
 
 		logger.debug("saving user...");
 
-		JSONObject user = new JSONObject();
+		JSONObject user = this.userDAO.findUserByUserName(name);
 
+		if(user !=null){
+			
+			model.addAttribute(PARAMETER_KEY_ERROR, PARAMETER_KEY_ERROR_CODE_USUARIO_EXISTENTE);
+
+			return "redirect:/"+REST_PATH_ADMIN_SETTING;
+
+		}
+		
+		user = new JSONObject();
+		
 		user.put(UsuarioDAO.JSON_KEY_USERNAME, name);
 
 		user.put(UsuarioDAO.JSON_KEY_PASSWORD, pwd);
-
+		
 		this.userDAO.saveUser(user);
 
 		logger.debug("saving done");
@@ -175,11 +187,31 @@ public class UsuarioController implements Constants
 
 		logger.debug("deleting user...");
 
-		this.userDAO.deleteUser(id);
+		this.userDAO.setUserAvailability(id,0);
 
 		logger.debug("user deleted...");
 
 		return "redirect:/"+REST_PATH_ADMIN_SETTING;
 
 	}
+
+
+	@RequestMapping(value="/"+REST_PATH_ADMIN_USER_ACTIVATE, method = RequestMethod.POST)
+	public String adminUsuariosActivate(@RequestParam(PARAMETER_KEY_USUARIO_ID)  String id, ModelMap model) throws SQLException, JSONException {
+
+		Logger logger = Logger.getLogger(UsuarioController.class);
+
+		logger.debug("adminUsuariosActivate");	
+
+		logger.debug("activate user...");
+
+		this.userDAO.setUserAvailability(id,1);
+
+		logger.debug("user activate...");
+
+		return "redirect:/"+REST_PATH_ADMIN_SETTING;
+
+	}
+
+
 }
