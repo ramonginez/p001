@@ -7,10 +7,12 @@
 	http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
  
 	<http auto-config="true">
-		<intercept-url pattern="/proyecto*" access="ROLE_USER" />
-		<intercept-url pattern="/proyecto/*/inventarios*" access="ROLE_USER" />
-		<intercept-url pattern="/proyecto/*/inventarios/*/activos" access="ROLE_USER" />
-		<intercept-url pattern="/usuario*" access="ROLE_USER" />
+		<intercept-url pattern="/proyecto**" access="ROLE_USER" />
+		<intercept-url pattern="/proyecto/**" access="ROLE_USER" />
+		<intercept-url pattern="/checkin**" access="ROLE_USER" />
+		<intercept-url pattern="/setting**" access="ROLE_USER" />
+		<intercept-url pattern="/usuario**" access="ROLE_USER" />
+		
 		<form-login login-page="/login"
 			default-target-url="/proyecto_list"
 			authentication-failure-url="/loginfailed" />

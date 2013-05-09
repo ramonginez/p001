@@ -47,7 +47,7 @@
 
 	<div class="checkin_list_box">
 		<ul id="checkin_list">
-			<li>No hay usuarios encontrados</li>
+			<li>Usuarios encontrados:</li>
 		</ul>
 	</div>
 	

@@ -476,7 +476,7 @@ public class MysqlDataController {
 
 			rs = statement.executeQuery(query);
 
-			if (rs.next()) {
+			while (rs.next()) {
 
 				JSONObject c = new JSONObject();
 

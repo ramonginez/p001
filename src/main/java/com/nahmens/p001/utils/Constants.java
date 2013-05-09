@@ -7,7 +7,7 @@ public interface Constants {
 
 	public static final String REST_PATH_CHECKIN ="checkin";
 	public static final String REST_PATH_LOGOUT ="logout";
-	public static final String REST_PATH_SETTING ="#"; //TODO change when the controller is ready
+	public static final String REST_PATH_SETTING ="usuario"; 
 
 	// View path
 	public static final String VIEW_PROYECTO ="proyectos";
@@ -57,6 +57,6 @@ public interface Constants {
 	public static final String REST_PATH_MEDIA_AUDIO 		="media/audio/{"+PARAMETER_KEY_ID+"}";
 	public static final String REST_PATH_MEDIA_IMG			="media/image/{"+PARAMETER_KEY_ID+"}";
 
-	
+	public static final String REST_PATH_UPDATE_USUARIO		="usuario_update";
 
 }
