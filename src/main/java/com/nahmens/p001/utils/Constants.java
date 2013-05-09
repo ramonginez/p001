@@ -3,11 +3,12 @@ package com.nahmens.p001.utils;
 public interface Constants {
 
 
-
+	public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
 	public static final String REST_PATH_CHECKIN ="checkin";
 	public static final String REST_PATH_LOGOUT ="logout";
 	public static final String REST_PATH_SETTING ="usuario"; 
+	public static final String REST_PATH_ADMIN_SETTING ="admin/usuario"; 
 
 	// View path
 	public static final String VIEW_PROYECTO ="proyectos";
@@ -15,6 +16,8 @@ public interface Constants {
 	public static final String VIEW_ACTIVO ="activos";
 	public static final String VIEW_AUDIO ="audio";
 	public static final String VIEW_PHOTO ="photo";
+	public static final String VIEW_USUARIOS ="usuarios";
+	public static final String VIEW_USUARIOS_ADMIN ="adminUsuarios";
 	
 
 	// Parameters keys

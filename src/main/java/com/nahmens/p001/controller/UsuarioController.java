@@ -1,7 +1,13 @@
 package com.nahmens.p001.controller;
 
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Iterator;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +27,27 @@ public class UsuarioController implements Constants {
 		// This request is disabled, because DEBUG < INFO.
 		logger.debug("usuariosShow");		
 
-		return "usuarios";
+		
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	      
+	    Collection<GrantedAuthority> authority = auth.getAuthorities();
+	    
+	    for (GrantedAuthority granted : authority) {
+
+            if (granted.getAuthority().equalsIgnoreCase(ROLE_ADMIN)) {
+            	
+            	
+        		logger.debug("Admin Request");
+        		
+        		return "redirect:/"+REST_PATH_ADMIN_SETTING;
+
+
+            }
+        
+	    }
+		
+	 		
+		return VIEW_USUARIOS;
 	}
 
 	@RequestMapping(value="/"+REST_PATH_UPDATE_USUARIO, method = RequestMethod.POST)
@@ -35,4 +61,16 @@ public class UsuarioController implements Constants {
 		return "redirect:/"+REST_PATH_SETTING;
 	}
 
+	
+	@RequestMapping(value="/"+REST_PATH_ADMIN_SETTING, method = RequestMethod.GET)
+	public String adminUsuariosShow(ModelMap model) throws SQLException {
+
+		Logger logger = Logger.getLogger(UsuarioController.class);
+
+		// This request is disabled, because DEBUG < INFO.
+		logger.debug("adminUsuariosShow");		
+	   
+	 		
+		return VIEW_USUARIOS_ADMIN;
+	}
 }
