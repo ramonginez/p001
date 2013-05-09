@@ -4,6 +4,10 @@
 
 	String changePwdPage = Constants.REST_PATH_ADMIN_SETTING_UPDATE;
 	
+	String createUserPage = Constants.REST_PATH_ADMIN_USER_CREATE;
+	
+	String deleteUserPage = Constants.REST_PATH_ADMIN_USER_DELETE;
+	
 	org.json.JSONArray userList = (JSONArray)request.getAttribute(Constants.PARAMETER_KEY_USER_LIST);	
 	
 %>
@@ -47,6 +51,18 @@
 			}
 		}
 		
+		function deleteUser(value){
+	 	
+	 		var confirm_box = confirm('Confirmar eliminar?');
+
+    		if (confirm_box) {
+				$('<form action="${pageContext.request.contextPath}/<%=deleteUserPage%>" method="POST">' + 
+			    '<input type="hidden" name="<%=Constants.PARAMETER_KEY_USUARIO_ID%>" value="' + value + '">' +
+			    '</form>').appendTo($(document.body)).submit();
+			}
+		}
+	   	
+		
 		
 			
 		function trim(str) {
@@ -56,12 +72,48 @@
 			
 		function isAllowedPwd(value){
 			
-	//Password supports special characters and here min length 6 max 20 charters.
+			//Password supports special characters and here min length 6 max 20 charters.
 			
 				return /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/.test(value);
 			
 
+    	}
+    	
+    	function isAllowedPname(value){
+			
+				//Supports alphabets and numbers no special characters except underscore('_') min 3 and max 20 characters. 			
+				return /^[A-Za-z0-9_]{3,20}$/.test(value);
+			
+
     		}	
+    		
+    		function submitFormCreateUser()
+            {
+            	
+
+            	var uname = document.getElementById("<%=Constants.PARAMETER_KEY_USUARIO_UNAME%>");
+
+            	var upwd = document.getElementById("<%=Constants.PARAMETER_KEY_USUARIO_PWD%>");
+            	
+            	if(uname.value == null || trim(uname.value) == ""|| !isAllowedPname(uname.value))
+            	{
+            		alert("Nombre de usuario invalido! ");  
+            		          	
+            	}else if(upwd.value == null || trim(upwd.value) == "" || !isAllowedPwd(upwd.value))
+            	{
+            		alert("La nueva clave no cumple los requerimientos. Debe tener entre 6 y 20 caracteres. ");  
+            		     
+            	}else
+            	{
+        	        
+			        document.createform.submit();
+        	        
+
+            	}
+
+			}
+    		
+    		 
 			
     		
     </script>
@@ -75,10 +127,32 @@
 <div class="wrap">
   <h1>Admin Settings</h1>
 
+
+<div>	
+		<form name="createform" id="createform" action="${pageContext.request.contextPath}/<%=createUserPage%>" method="POST"> 
+		
+		 <fieldset class="container-text" id="activo">
+				<legend>Crear Nuevo Usuario</legend>
+				<div>
+					<label for="<%=Constants.PARAMETER_KEY_USUARIO_UNAME%>">Username:</label></br>
+					<input type="text"  id="<%=Constants.PARAMETER_KEY_USUARIO_UNAME%>" name="<%=Constants.PARAMETER_KEY_USUARIO_UNAME%>"> </br>
+				</div>
+				<div>
+					<label for="<%=Constants.PARAMETER_KEY_USUARIO_PWD%>"">Clave:</label></br>
+					<input type="password"  id="<%=Constants.PARAMETER_KEY_USUARIO_PWD%>" name="<%=Constants.PARAMETER_KEY_USUARIO_PWD%>"> </br>
+				</div>
+		
+			<div class="salvar">
+		      <input type="button" onclick="javascript: submitFormCreateUser();" value ="Crear" name="btn-create-USER" id="btn-create-USER" value=""/>
+			</div>
+		</form>
+	</div>
+	
 	<table width="100%">
 	
 	<tbody>
-
+	
+	
 	    	<%if(userList!=null){
 
 				for(int i = 0; i < userList.length(); i++){
@@ -102,10 +176,15 @@
 
 		 <td>
 		 		<a id="btn_<%=i+1%>" href="#" onclick="cambio('<%=idUser%>','<%=i+1%>');" >
-		 			<img src="${pageContext.request.contextPath}/resources/img/edit.png" alt="Cambiar">
+		 			<img src="${pageContext.request.contextPath}/resources/img/edit.png" alt="Cambiar clave">
 		 		</a>
 		 </td>
   	
+  	 	<td>
+		 		<a id="btn-del_<%=i+1%>" href="#" onclick="deleteUser('<%=idUser%>');" >
+		 			<img src="${pageContext.request.contextPath}/resources/img/remove.png" alt="Delete">
+		 		</a>
+		 </td>
 
 <%}}%>
 

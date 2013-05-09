@@ -9,8 +9,9 @@ public interface Constants {
 	public static final String REST_PATH_LOGOUT ="logout";
 	public static final String REST_PATH_SETTING ="usuario"; 
 	public static final String REST_PATH_ADMIN_SETTING ="admin/usuario";
-	public static final String REST_PATH_ADMIN_SETTING_UPDATE ="/admin/usuario_update";
-	
+	public static final String REST_PATH_ADMIN_SETTING_UPDATE ="admin/usuario_update";
+	public static final String REST_PATH_ADMIN_USER_CREATE ="admin/usuario_create";	
+	public static final String REST_PATH_ADMIN_USER_DELETE ="admin/usuario_delete";
 
 	// View path
 	public static final String VIEW_PROYECTO ="proyectos";
@@ -38,6 +39,7 @@ public interface Constants {
 	public static final String  PARAMETER_KEY_USER_LIST ="ulist";
 	public static final String  PARAMETER_KEY_USUARIO_ID ="uid";
 	public static final String  PARAMETER_KEY_USUARIO_PWD ="pwd";
+	public static final String  PARAMETER_KEY_USUARIO_UNAME ="uname";
 
 
 	//JSON RESPONSE KEYS
