@@ -1,10 +1,10 @@
 package com.nahmens.p001.controller;
 
-import java.sql.SQLException;
 import java.util.UUID;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +14,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.apache.log4j.Logger;
 
 import com.nahmens.p001.datacontroller.MysqlDataController;
+import com.nahmens.p001.model.dao.AutocompleteDAO;
+import com.nahmens.p001.model.dao.AutocompleteDAOImpl;
 import com.nahmens.p001.utils.Constants;
 
 @Controller
-public class ActivoController implements Constants {
+public class ActivoController implements Constants
+{
+	private AutocompleteDAO autocompleteDAO;
+	@Autowired
+	public void setAutocompleteDAO(AutocompleteDAOImpl autocompleteDAO) {
+		this.autocompleteDAO = autocompleteDAO;
+	}
+
 
 	Logger _logger = Logger.getLogger(ActivoController.class);
 
@@ -125,5 +134,13 @@ public class ActivoController implements Constants {
 
 		return "redirect:/"+REST_PATH_LIST_INVENTARIO.replace("{"+PARAMETER_KEY_PROYECTO_NAME+"}", p);
 
+	}
+	
+	@RequestMapping(value="/autocomplete", method = RequestMethod.GET)
+	public String getAssetsAndTypes(ModelMap model)
+	{
+		JSONArray values = autocompleteDAO.getAllValues();
+		System.out.println(values);
+		return VIEW_ACTIVO;
 	}
 }
