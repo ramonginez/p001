@@ -3,6 +3,7 @@ package com.nahmens.p001.controller;
 import java.util.UUID;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -140,7 +141,105 @@ public class ActivoController implements Constants
 	public String getAssetsAndTypes(ModelMap model)
 	{
 		JSONArray values = autocompleteDAO.getAllValues();
-		System.out.println(values);
+		model.addAttribute("values", values);
+		return VIEW_ACTIVO;
+	}
+	
+	@RequestMapping(value="/asset", method = RequestMethod.POST)
+	public String assetCreate(@RequestParam("data") String data, ModelMap model) throws JSONException
+	{
+		Logger logger = Logger.getLogger(ActivoController.class);
+		logger.debug("Saving asset");
+
+		JSONObject assetData = new JSONObject(data);
+		if (!assetData.isNull("asset_name"))
+		{
+			this.autocompleteDAO.saveAsset(assetData.getString("asset_name"));
+			logger.debug("Asset saved...");
+		}
+
+		return VIEW_ACTIVO;
+	}
+	
+	@RequestMapping(value="/asset/update", method = RequestMethod.POST)
+	public String assetUpdate(@RequestParam("data") String data, ModelMap model) throws JSONException
+	{
+		Logger logger = Logger.getLogger(ActivoController.class);
+		logger.debug("Updating asset");
+
+		JSONObject assetData = new JSONObject(data);
+		if (!(assetData.isNull("asset_id") || assetData.isNull("asset_name")))
+		{
+			this.autocompleteDAO.updateAsset(assetData);
+			logger.debug("Asset updated...");
+		}
+
+		return VIEW_ACTIVO;
+	}
+	
+	@RequestMapping(value="/asset/delete", method = RequestMethod.POST)
+	public String assetDelete(@RequestParam("data") String data, ModelMap model) throws JSONException
+	{
+		Logger logger = Logger.getLogger(ActivoController.class);
+		logger.debug("Deleting asset");
+
+		JSONObject assetData = new JSONObject(data);
+		if (!assetData.isNull("asset_id"))
+		{
+			this.autocompleteDAO.deleteAsset(assetData.getInt("asset_id"));
+			logger.debug("Asset deleted...");
+		}
+
+
+		return VIEW_ACTIVO;
+	}
+	
+	@RequestMapping(value="/asset/type", method = RequestMethod.POST)
+	public String typeCreate(@RequestParam("data") String data, ModelMap model) throws JSONException
+	{
+		Logger logger = Logger.getLogger(ActivoController.class);
+		logger.debug("Saving type");
+
+		JSONObject typeData = new JSONObject(data);
+		if (!(typeData.isNull("asset_id") || typeData.isNull("type_name")))
+		{
+			this.autocompleteDAO.saveType(typeData);
+			logger.debug("Type saved...");
+		}
+
+
+		return VIEW_ACTIVO;
+	}
+	
+	@RequestMapping(value="/asset/type/update", method = RequestMethod.POST)
+	public String typeUpdate(@RequestParam("data") String data, ModelMap model) throws JSONException
+	{
+		Logger logger = Logger.getLogger(ActivoController.class);
+		logger.debug("UPdating type");
+
+		JSONObject typeData = new JSONObject(data);
+		if (!(typeData.isNull("type_id") || typeData.isNull("type_name")))
+		{
+			this.autocompleteDAO.updateType(typeData);
+			logger.debug("Type updated...");
+		}
+
+		return VIEW_ACTIVO;
+	}
+	
+	@RequestMapping(value="/asset/type/delete", method = RequestMethod.POST)
+	public String typeDelete(@RequestParam("data") String data, ModelMap model) throws JSONException
+	{
+		Logger logger = Logger.getLogger(ActivoController.class);
+		logger.debug("Deleting type");
+
+		JSONObject typeData = new JSONObject(data);
+		if (!typeData.isNull("type_id"))
+		{
+			this.autocompleteDAO.deleteType(typeData.getInt("type_id"));
+			logger.debug("Type saved...");
+		}
+
 		return VIEW_ACTIVO;
 	}
 }
