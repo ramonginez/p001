@@ -1,19 +1,19 @@
 @charset "UTF-8";
 /* CSS */
-h1 , h2{
-	text-align:center;
+h1, h2 {
+	text-align: center;
 	color: #4E4E4E;
 }
-legend{
-	
+legend {
+
 	color: #4E4E4E;
-    font-size: 20px;
-    font-weight: bold;
-	
+	font-size: 20px;
+	font-weight: bold;
 }
-fieldset{
+fieldset {
 	margin-top: 15px;
-    padding: 10px;}
+	padding: 10px;
+}
 .wrap {
 	margin-left: auto;
 	margin-right: auto;
@@ -23,19 +23,19 @@ fieldset{
 /*################### Login ######################### */
 
 .login-wrapper {
-	  background-color: rgba(255, 255, 255, 0.45);
-    border: 1px solid #FFFFFF;
-    border-radius: 4px 4px 4px 4px;
-    box-shadow: 0 0 5px #AAAAAA;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 50px;
-    padding: 15px;
-    width: 300px;
+	background-color: rgba(255, 255, 255, 0.45);
+	border: 1px solid #FFFFFF;
+	border-radius: 4px 4px 4px 4px;
+	box-shadow: 0 0 5px #AAAAAA;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+	padding: 15px;
+	width: 300px;
 }
 .login-logo {
 	width: 100%;
-	text-align:center;
+	text-align: center;
 	padding: 8px;
 }
 .login-logo img {
@@ -50,16 +50,16 @@ fieldset{
 	width: 70%;
 }
 .login-form div {
-	text-align:right;
+	text-align: right;
 	padding: 4px;
 }
 .login-form .label {
-	text-align:left;
+	text-align: left;
 	width: 25%;
-	float:left;
+	float: left;
 }
 .login-form .btn {
-	text-align:center;
+	text-align: center;
 }
 .login-form input[type=submit], input[type=reset] {
 	padding: 8px;
@@ -70,7 +70,7 @@ fieldset{
 	background-color: #ffEEEE;
 	border: 3px solid #ff0000;
 	padding: 8px;
-	text-align:center;
+	text-align: center;
 }
 /*################### Header  ################################ */
 .header-container {
@@ -78,12 +78,12 @@ fieldset{
 	border-width: 1px;
 	height: 123px;
 	width: 100%;
- border-color:;
+	border-color: ;
 	padding-bottom: 0;
 	min-width: 800px;
 }
 .header-container ul {
-	margin:0
+	margin: 0
 }
 .header-container li {
 	background-image: url("../img/tab-bg.gif");
@@ -115,7 +115,7 @@ fieldset{
 	width: 150px;
 }
 .header-logo {
-	text-align:left;
+	text-align: left;
 	height: 96px;
 }
 .header-logo img {
@@ -130,7 +130,7 @@ fieldset{
 	padding: 15px;
 }
 .proyectos-search-wrap div {
-	display:inline;
+	display: inline;
 	padding-left: 4px;
 	padding-right: 4px
 }
@@ -143,7 +143,7 @@ fieldset{
 	width: 60%;
 }
 .search {
-	width:80%;
+	width: 80%;
 }
 .proyectos-list {
 	width: 100%;
@@ -166,124 +166,157 @@ fieldset{
 .proyectos-list li div {
 	padding: 5px;
 	width: 27%;
-	float:left;
+	float: left;
 }
 
 .proyectos-create-box {
 	margin-left: auto;
-    padding-bottom: 10px;
-    width: 23%;
-    }
-.proyectos-create-box input[type=button]{
-	    
-  background: url("../img/add.png") no-repeat scroll center center / 15px auto transparent;
-    color: #000000;
-    cursor: pointer;
-    font-weight: bold;
-    height: 23px;
-    padding-bottom: 2px;
-    width: 20px;
-	
-}    
-.proyectos-create-box img{
-	    vertical-align: bottom;
-    	width: 23px;
+	padding-bottom: 10px;
+	width: 23%;
 }
-.proyectos-search-wrap form{
+.proyectos-create-box input[type=button] {
+
+	background: url("../img/add.png") no-repeat scroll center center /15px auto transparent;
+	color: #000000;
+	cursor: pointer;
+	font-weight: bold;
+	height: 23px;
+	padding-bottom: 2px;
+	width: 20px;
+}
+.proyectos-create-box img {
+	vertical-align: bottom;
+	width: 23px;
+}
+.proyectos-search-wrap form {
 	display: inline;
-    width: 75%;
+	width: 75%;
 }
 
 /*################### Activo  ################################ */
 
-.media >li
-{
+.media > li {
 	display: inline;
 	list-style-type: none;
-
 }
-.media
-{
+.media {
 	margin-left: auto;
-	margin-right: auto;	
+	margin-right: auto;
 	width: 85%;
 }
-.media A
-{
-	padding:10px;
+.media A {
+	padding: 10px;
 }
 
-.container-text div{
+.container-text div {
 
 	display: inline-block;
-    padding: 5px;
-    width: 30%;
+	padding: 5px;
+	width: 30%;
 }
-.container-text div input[type=text]{
-    width: 90%;
+.container-text div input[type=text] {
+	width: 85%;
 }
-.container-text div select{
-    width: 206px;
+.container-text div select {
+	width: 206px;
 }
 
 .salvar {
- 
- 	padding: 12px;
-    text-align: right;	
+
+	padding: 12px;
+	text-align: right;
 }
-.salvar input{
-    width: 206px;
-	 height: 40px;
+.salvar input {
+	width: 206px;
+	height: 40px;
 }
 /*################### Carousel  ################################ */
 
 .jcarousel-skin-tango .jcarousel-container-horizontal {
-    padding: 20px 40px;
-    width: 675px;
-    margin-left: auto;
-    margin-right: auto;
+	padding: 20px 40px;
+	width: 675px;
+	margin-left: auto;
+	margin-right: auto;
 }
 .jcarousel-skin-tango .jcarousel-clip-horizontal {
-    height: 170px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 620px;
-    }
+	height: 170px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 620px;
+}
 .jcarousel-skin-tango .jcarousel-item {
-    height: 170px;
-    width: 210px;
-    padding: 1px;
-    
+	height: 170px;
+	width: 210px;
+	padding: 1px;
 }
 .jcarousel-skin-tango .jcarousel-container {
-    background: none repeat scroll 0 0 #EAEAEA;
-    border: 1px solid #4E4E4E;
+	background: none repeat scroll 0 0 #EAEAEA;
+	border: 1px solid #4E4E4E;
 }
 
 /*################### Checkin  ################################ */
-.checkin_box{
+.checkin_box {
 	min-width: 300px;
 }
 
-.checkin_list_box li{
-    padding-right: 10px;
+.checkin_list_box li {
+	padding-right: 10px;
 }
 
-#map_canvas{
-  	float: right;
-    height: 300px;
-    width: 70%;
+#map_canvas {
+	float: right;
+	height: 300px;
+	width: 70%;
 }
-.date-box{
+.date-box {
 	margin-left: auto;
-    margin-right: auto;
-    padding-bottom: 15px;
-    width: 300px;
+	margin-right: auto;
+	padding-bottom: 15px;
+	width: 300px;
 }
 
-.date-box p{
+.date-box p {
 	float: left;
-    margin: 0;
-    padding-right: 20px;
-    width: 204px;
+	margin: 0;
+	padding-right: 20px;
+	width: 204px;
+}
+/*################### Setting  ################################ */
+
+.clave div {
+	display: inline-block;
+	padding: 5px;
+	width: 23%;
+}
+.clave input {
+
+	width: 85%;
+}
+.autocomplete-add  {
+	background: url("../img/add.png") no-repeat scroll center center /15px auto transparent;
+	color: #000000;
+	cursor: pointer;
+	font-weight: bold;
+	height: 23px;
+	padding-bottom: 2px;
+	width: 20px;
+}
+.autocomple-values {
+	width: 100%;
+}
+.autocomple-values td {
+
+	width: 50%;
+}
+
+#autocomple-container-salvar {
+
+	text-align: center;
+	width: 100%;
+	padding-top: 15px;
+}
+
+#autocomple-container-salvar a{
+
+	padding-right: 5px
 }

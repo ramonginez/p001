@@ -44,6 +44,8 @@ public interface Constants {
 	public static final String  PARAMETER_KEY_USUARIO_UNAME ="uname";
 	public static final String  PARAMETER_KEY_ERROR ="error";
 
+	public static final String  PARAMETER_KEY_CAMPOS_LIST ="campolist";
+
 	public static final String  PARAMETER_KEY_ERROR_CODE_USUARIO_EXISTENTE ="1";
 	public static final String  PARAMETER_KEY_ERROR_MSG_USUARIO_EXISTENTE ="Error al crear usuario: El nombre de usuario ha sido registrado en el sistema previamente";
 

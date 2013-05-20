@@ -116,6 +116,41 @@ public class UsuarioController implements Constants
 
 		model.addAttribute(PARAMETER_KEY_USER_LIST, userList);
 
+		//TODO Real values:
+		JSONArray jCampos= new JSONArray();
+		
+		JSONObject jObject = new JSONObject();
+		JSONArray jArray= new JSONArray();
+		jArray.put("c1val1");
+		jArray.put("c1val2");
+		jArray.put("c1val3");
+		jObject.put("name", "c1");
+		jObject.put("value", jArray);
+		jCampos.put(jObject);
+
+		jObject = new JSONObject();
+		jArray= new JSONArray();
+		jArray.put("c2val1");
+		jArray.put("c2val2");
+		jArray.put("c2val3");
+		jObject.put("name", "c2");
+		jObject.put("value", jArray);
+		jCampos.put(jObject);
+
+		jObject = new JSONObject();
+		jArray= new JSONArray();
+		jArray.put("c3val1");
+		jArray.put("c3val2");
+		jArray.put("c3val3");
+		jObject.put("name", "c3");
+		jObject.put("value", jArray);
+		
+		
+		jCampos.put(jObject);
+		
+		model.addAttribute(PARAMETER_KEY_CAMPOS_LIST, jCampos);
+
+
 		return VIEW_USUARIOS_ADMIN;
 	}
 
