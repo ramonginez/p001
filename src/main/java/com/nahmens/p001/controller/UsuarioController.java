@@ -1,5 +1,6 @@
 package com.nahmens.p001.controller;
 
+import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.Collection;
 import org.json.JSONArray;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.apache.log4j.Logger;
 
+import com.nahmens.p001.model.dao.AutocompleteDAO;
 import com.nahmens.p001.model.dao.UsuarioDAO;
 import com.nahmens.p001.model.dao.UsuarioDAOImpl;
 import com.nahmens.p001.utils.Constants;
@@ -25,10 +27,13 @@ import com.nahmens.p001.utils.Constants;
 public class UsuarioController implements Constants
 {
 	private UsuarioDAO userDAO;
+	private AutocompleteDAO autocomplteDAO;
+
 	@Autowired
-	public void setUserDAO(UsuarioDAOImpl userDAO)
+	public void setUserDAO(UsuarioDAOImpl userDAO, AutocompleteDAO autocomplteDAO)
 	{
 		this.userDAO = userDAO;
+		this.autocomplteDAO = autocomplteDAO;
 	}
 
 
@@ -112,10 +117,12 @@ public class UsuarioController implements Constants
 		}
 
 		JSONArray userList = this.userDAO.findAllUsers();
-
-
+		
 		model.addAttribute(PARAMETER_KEY_USER_LIST, userList);
 
+
+
+/*
 		//TODO Real values:
 		JSONArray jCampos= new JSONArray();
 		
@@ -147,7 +154,9 @@ public class UsuarioController implements Constants
 		
 		
 		jCampos.put(jObject);
-		
+		*/
+		JSONArray jCampos = this.autocomplteDAO.getAllValues();
+
 		model.addAttribute(PARAMETER_KEY_CAMPOS_LIST, jCampos);
 
 
@@ -242,11 +251,32 @@ public class UsuarioController implements Constants
 
 		this.userDAO.setUserAvailability(id,1);
 
-		logger.debug("user activate...");
+		return "redirect:/"+REST_PATH_ADMIN_SETTING;
+
+	}
+	
+	@RequestMapping(value="/"+REST_PATH_ADMIN_CAMPOS_SAVE, method = RequestMethod.POST)
+	public String adminCampoSave(@RequestParam(PARAMETER_KEY_CAMPOS_LIST)  String campoList, ModelMap model) throws Exception{
+
+		Logger logger = Logger.getLogger(UsuarioController.class);
+
+		logger.debug("adminCampoSave");	
+
+		String strDecoded = URLDecoder.decode(campoList, "UTF-8");
+		
+		JSONArray jCampos = new JSONArray(strDecoded);
+		
+		String a= jCampos.toString();
+		
+		logger.debug("value: "+a);
+		
+		//TODO Save real type
+		//this.autocomplteDAO.saveType();
 
 		return "redirect:/"+REST_PATH_ADMIN_SETTING;
 
 	}
 
 
+	
 }

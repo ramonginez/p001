@@ -13,6 +13,9 @@ public interface Constants {
 	public static final String REST_PATH_ADMIN_USER_CREATE ="admin/usuario_create";	
 	public static final String REST_PATH_ADMIN_USER_DELETE ="admin/usuario_delete";
 	public static final String REST_PATH_ADMIN_USER_ACTIVATE ="admin/usuario_activate";
+	public static final String REST_PATH_ADMIN_CAMPOS_SAVE ="admin/campo_save";
+
+	
 
 	// View path
 	public static final String VIEW_PROYECTO ="proyectos";

@@ -292,6 +292,9 @@ fieldset {
 
 	width: 85%;
 }
+.autocomple-container div {
+	width: 57%;
+}
 .autocomplete-add  {
 	background: url("../img/add.png") no-repeat scroll center center /15px auto transparent;
 	color: #000000;

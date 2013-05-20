@@ -8,6 +8,8 @@ String createUserPage = Constants.REST_PATH_ADMIN_USER_CREATE;
 
 String deleteUserPage = Constants.REST_PATH_ADMIN_USER_DELETE;
 
+String saveCampoPage = Constants.REST_PATH_ADMIN_CAMPOS_SAVE;
+
 Object errCode = request.getAttribute(Constants.PARAMETER_KEY_ERROR);
 
 String errMsg=null;
@@ -35,6 +37,13 @@ org.json.JSONArray campoList = (JSONArray)request.getAttribute(Constants.PARAMET
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/setting.js"></script>
 
 		<script type="text/javascript">
+		
+		    var jsonCampos  = {  
+	              
+	              	"list" : [ ]
+	              
+	        };
+	        
 			function cambio(name, pos) {
 
 				var confirm_box = confirm('Confirma el cambio de la nueva clave?');
@@ -53,6 +62,19 @@ org.json.JSONArray campoList = (JSONArray)request.getAttribute(Constants.PARAMET
 						$('<form action="${pageContext.request.contextPath}/<%=changePwdPage%>" method="POST">' + '<input type="hidden" name="<%=Constants.PARAMETER_KEY_USUARIO_UNAME%>" value="' + name + '">' + '<input type="hidden" name="<%=Constants.PARAMETER_KEY_USUARIO_PWD%>" value="' + newPwd.value + '">' + '</form>').appendTo($(document.body)).submit();
 					}
 
+				}
+			}
+
+			function saveCampos() {
+
+				 
+				var confirm_box = confirm('Confirmar nuevas sugerencias creadas?');
+				
+				var value = encodeURIComponent(JSON.stringify(jsonCampos.list)); 
+
+				if (confirm_box) {
+					var strForm='<form action="${pageContext.request.contextPath}/<%=Constants.REST_PATH_ADMIN_CAMPOS_SAVE%>" method="POST">' + '<input type="hidden" name="<%=Constants.PARAMETER_KEY_CAMPOS_LIST%>" value="' + value + '">' + '</form>';
+					$(strForm).appendTo($(document.body)).submit();
 				}
 			}
 
@@ -103,8 +125,6 @@ org.json.JSONArray campoList = (JSONArray)request.getAttribute(Constants.PARAMET
 				}
 
 			}
-			
-			
 
 			<%if(errMsg!=null){%>
 			alert('<%=errMsg%>');
@@ -144,13 +164,13 @@ org.json.JSONArray campoList = (JSONArray)request.getAttribute(Constants.PARAMET
 							</fieldset>
 							</form>
 							</div>
-							
+
 							<div>
-						<fieldset class="container-text" id="activo">
-						<legend>
+							<fieldset class="container-text" id="activo">
+							<legend>
 							Modificar Usuarios
-						</legend>
-				
+							</legend>
+
 							<table width="100%">
 
 							<tbody>
@@ -195,62 +215,65 @@ org.json.JSONArray campoList = (JSONArray)request.getAttribute(Constants.PARAMET
 							<div class="autocomple-container">
 
 							<fieldset class="container-text" id="activo">
-							
+
 							<legend>
-								Definir variable de sugerencia por campos:
+							Definir variable de sugerencia por campos:
 							</legend>
 
 							<table width=100% border="1">
 							<thead>
-								<tr>
-								<th>Campo</th>
-								<th>Valores sugeridos</th>
-								</tr>
+							<tr>
+							<th>Campo</th>
+							<th>Valores sugeridos</th>
+							</tr>
 							</thead>
 							<tbody>
-								<%if(campoList!=null){
-									
-									for(int i = 0; i < campoList.length(); i++){
+							<%if(campoList!=null){
 
-										JSONObject jCampo = campoList.getJSONObject(i);
-		
-										String campo = jCampo.getString("name");
-										JSONArray values = jCampo.getJSONArray("value");
-		
-									%>
-									
-									
-									<tr>
-									<td><%=campo%></td>
-									<td>
-										<div >
-											<input id="add-<%=campo%>" type="text" name="name">
-											<input  type="button" class="autocomplete-add" id="<%=campo%>"> 
-										</div>
-										<table id="table-<%=campo%>" class="autocomple-values">
-											<%if(campoList!=null){
+							for(int i = 0; i < campoList.length(); i++){
 
-												for(int j = 0; j < values.length(); j++){
-													
-													String value = values.getString(j);
-													String id = campo+value;
-													%>
-													
-														<tr id="tr-<%=id%>" bgcolor="#f2f2f2">
-															<td><%=value%></td>
-															<td><a> <img src="/vasa/resources/img/remove.png" alt="Delete" class="autocomplete-remove" id="<%=id%>"></a></td>
-														</tr>
-												<%
-												}
-											}
-									    	%>
-										</table>
-									</td>
-								</tr>
-									
-										<%}
-								}%>
-								
+							JSONObject jCampo = campoList.getJSONObject(i);
+
+							String campoName = jCampo.getString("asset_name");
+							
+							String campoId = campoName.replaceAll("\\s","");
+							JSONArray values = jCampo.getJSONArray("types");
+
+							%>
+
+							<tr>
+							<td><%=campoName%></td>
+							<td>
+							<div class="autocomplete-add-container">
+							<input id="add-<%=campoId%>" type="text" name="name">
+							<input  type="button" class="autocomplete-add" id="<%=campoId%>">
+							</div>
+							<table id="table-<%=campoId%>" class="autocomple-values">
+							<%if(campoList!=null){
+
+							for(int j = 0; j < values.length(); j++){
+
+							JSONObject jValue = values.getJSONObject(j);
+							String value = jValue.getString("type_name");
+							String id = campoId +"--"+value;
+							id = id.replaceAll("\\s","");
+							%>
+
+							<tr id="tr--<%=id%>" bgcolor="#f2f2f2">
+								<td><%=value%></td>
+								<td><a> <img src="/vasa/resources/img/remove.png" alt="Delete" class="autocomplete-remove" id="<%=id%>"></a></td>
+							</tr>
+							<%
+							}
+							}
+							%>
+							</table>
+							</td>
+							</tr>
+
+							<%}
+							}%>
+
 							</tbody>
 							</table>
 							<div class="salvar" id="autocomple-container-salvar" >
