@@ -8,13 +8,13 @@ $(document).ready(function() {
 
 	$('.autocomple-values').on('click', '.autocomplete-remove',function() {
 
-		var id = this.id;
-		
-		var keys = id.split("--");
+   		var asset = $(this).attr("asset");
+                
+        var assetType = $(this).attr("atype");
         
-		findAndRemove(jsonCampos.list, "asset_name", keys[0],"type_name", keys[1]);
+		findAndRemove(jsonCampos.list, "asset_id", asset,"type_name", assetType);
 
-		$('#tr--' +id ).remove();
+		$('#tr--' +this.id).remove();
 	});
 
 	
@@ -26,9 +26,9 @@ $(document).ready(function() {
 
 		var table = $("#table-" + id);
 
-		var campoId = id + "--" + trim(inputValue);
+		var campoId = id + "--" + inputValue.replace(/\s/g, "");
 		
-		if (inputValue == null || trim(inputValue) == "" || !isAllowedPname(inputValue)) {
+		if (inputValue == null || $.trim(inputValue) == "" ) {
 					
 			alert("Valor invalido!");
 			
@@ -45,11 +45,13 @@ $(document).ready(function() {
 		}
 		
 
-		var row = '<tr id="tr--' + campoId + '" bgcolor="#f2f2f2">' + '<td>' + inputValue + '</td>' + '<td><a> <img src="/vasa/resources/img/remove.png" alt="Delete" class="autocomplete-remove" id="' + campoId + '"></a></td></tr>';
+		var row = '<tr id="tr--' + campoId + '" asset="'+id+'" atype="'+inputValue+'" bgcolor="#f2f2f2">' 
+		+ '<td>'+ inputValue + '</td>'
+		+ '<td><a> <img src="/vasa/resources/img/remove.png" alt="Delete" class="autocomplete-remove" asset="'+id+'" atype="'+inputValue+'"  id="' + campoId + '"></a></td></tr>';
 
 		table.append(row);
 		
-		jsonCampos.list.push( { "asset_name":id, "type_name": inputValue} );
+		jsonCampos.list.push( { "asset_id":id, "type_name": inputValue} );
 		
 		$("#add-" + id).val("");
 	});
@@ -71,13 +73,14 @@ $(document).ready(function() {
 	
 $('.autocomple-values >  tbody tr').each(function() {
         
-        var id = this.id;
-        
-        var keys = id.split("--");
-        
-        jsonCampos.list.push( { "asset_name":keys[1], "type_name": keys[2]} );
+        var asset = $(this).attr("asset");
+                
+        var assetType = $(this).attr("atype");
 
+       
+        jsonCampos.list.push( { "asset_id":asset, "type_name": assetType} );
 
+ 
 	});
 
 });

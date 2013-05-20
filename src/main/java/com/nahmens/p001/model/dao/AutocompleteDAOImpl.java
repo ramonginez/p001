@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -56,7 +57,7 @@ public class AutocompleteDAOImpl implements AutocompleteDAO
 
 			String sql =	"SELECT a.asset_id, a.asset_name, at.type_id, at.type_name " +
 							"FROM assets a, asset_types at " +
-							"WHERE a.asset_id = at.asset_id";
+							"WHERE a.asset_id = at.asset_id order by a.asset_id";
 			Statement s = myConn.createStatement();
 			ResultSet rs = s.executeQuery(sql);
 			
@@ -242,6 +243,67 @@ public class AutocompleteDAOImpl implements AutocompleteDAO
 			}	
 		}
 		return value;
+	}
+
+	public void saveTypeMultiple(JSONArray jCampos) throws Exception {
+
+		if(jCampos==null){
+			
+			return;
+		}
+		
+		Connection  conn = null;
+
+		try{
+
+			conn = ds.getConnection();
+			
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < jCampos.length(); ++i) {
+				
+			    JSONObject item = jCampos.getJSONObject(i);
+			    String asset = item.getString(JSON_KEY_ASSET_ID);
+			    String type = item.getString(JSON_KEY_TYPE_NAME);
+			    
+				sb.append("('"+asset+"','"+type+"'),");				
+			}
+
+			
+			String listOfValues = sb.substring(0, sb.length()-1);
+			
+			String query = "INSERT INTO  `asset_types` ("+JSON_KEY_ASSET_ID+","+JSON_KEY_TYPE_NAME+") VALUES " +
+					"LIST_OF_VALUES ";
+			
+			String newQuery = query.replace("LIST_OF_VALUES", listOfValues);
+			
+			String deleteQuery = "DELETE FROM `asset_types` ";
+
+
+			conn.setAutoCommit(false);
+		
+			Statement s = conn.createStatement();
+
+			s.executeUpdate (deleteQuery);
+			
+			s.executeUpdate (newQuery);
+
+			conn.commit();
+			
+
+
+		}finally{
+
+			try{
+
+				conn.close();
+
+			}catch(Exception e){
+
+				//DO nothing
+			}
+		}		
+		
 	}
 
 }

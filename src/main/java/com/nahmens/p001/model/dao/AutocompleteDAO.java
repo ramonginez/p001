@@ -18,4 +18,5 @@ public interface AutocompleteDAO
 	public int saveType(JSONObject t);
 	public int updateType(JSONObject t);
 	public int deleteType(int typeId);
+	public void saveTypeMultiple(JSONArray jCampos) throws Exception;
 }

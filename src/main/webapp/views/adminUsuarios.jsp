@@ -236,7 +236,8 @@ org.json.JSONArray campoList = (JSONArray)request.getAttribute(Constants.PARAMET
 
 							String campoName = jCampo.getString("asset_name");
 							
-							String campoId = campoName.replaceAll("\\s","");
+							String campoId = jCampo.getString("asset_id");
+							
 							JSONArray values = jCampo.getJSONArray("types");
 
 							%>
@@ -259,9 +260,9 @@ org.json.JSONArray campoList = (JSONArray)request.getAttribute(Constants.PARAMET
 							id = id.replaceAll("\\s","");
 							%>
 
-							<tr id="tr--<%=id%>" bgcolor="#f2f2f2">
+							<tr atype="<%=value%>" asset="<%=campoId%>" id="tr--<%=id%>" bgcolor="#f2f2f2">
 								<td><%=value%></td>
-								<td><a> <img src="/vasa/resources/img/remove.png" alt="Delete" class="autocomplete-remove" id="<%=id%>"></a></td>
+								<td><a> <img src="/vasa/resources/img/remove.png" alt="Delete" class="autocomplete-remove" atype="<%=value%>" asset="<%=campoId%>" id="<%=id%>"></a></td>
 							</tr>
 							<%
 							}
