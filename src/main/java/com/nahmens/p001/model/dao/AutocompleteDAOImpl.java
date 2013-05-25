@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Iterator;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -30,16 +29,16 @@ public class AutocompleteDAOImpl implements AutocompleteDAO
 	
 /*
 [  {"asset_name": "BOMBA",
-	"asset_id": 1,
-	"types": [	{"type_id": 1, "type_name": "CENTRIFUGA"},
-				{"type_id": 2, "type_name": "CARCAZA PARTIDA"},
-				{"type_id": 3, "type_name": "TORNILLO"},
-				{"type_id": 4, "type_name": "CAVIDAD PROGRESIVA"},
-				{"type_id": 5, "type_name": "ELECTROMAGNETICA"},
-				{"type_id": 6, "type_name": "SUMERGIBLE"}]
+	"asset_id": "1",
+	"types": [	{"type_name": "CENTRIFUGA"},
+				{"type_name": "CARCAZA PARTIDA"},
+				{"type_name": "TORNILLO"},
+				{"type_name": "CAVIDAD PROGRESIVA"},
+				{"type_name": "ELECTROMAGNETICA"},
+				{"type_name": "SUMERGIBLE"}]
 	},
    {"asset_name": "COMPRESOR DE AIRE",
-	"asset_id": 2,
+	"asset_id": "2",
 	"types": [	{"type_id": 7, "type_name": "RECIPROCANTE"},
 				{"type_id": 8, "type_name": "TORNILLO HELICOIDAL"},
 				{"type_id": 9, "type_name": "CENTRIFUGO"},
@@ -55,7 +54,7 @@ public class AutocompleteDAOImpl implements AutocompleteDAO
 		{
 			myConn = ds.getConnection();
 
-			String sql =	"SELECT a.asset_id, a.asset_name, at.type_id, at.type_name " +
+			String sql =	"SELECT a.asset_id, a.asset_name, at.type_name " +
 							"FROM assets a, asset_types at " +
 							"WHERE a.asset_id = at.asset_id order by a.asset_id";
 			Statement s = myConn.createStatement();
@@ -64,16 +63,16 @@ public class AutocompleteDAOImpl implements AutocompleteDAO
 			values = new JSONArray();
 			JSONObject asset = null;
 			JSONArray types = null;
-			int currentAssetId = -1;
+			String currentAssetId = "";
 			try
 			{
 				while (rs.next())
 				{
 					// Si el id del activo actual es distinto al siguiente de la consulta
-					if (currentAssetId != rs.getInt(1))
+					if (!currentAssetId.equals(rs.getString(1)))
 					{
 						asset = new JSONObject();
-						asset.put(JSON_KEY_ASSET_ID, rs.getInt(1));
+						asset.put(JSON_KEY_ASSET_ID, rs.getString(1));
 						asset.put(JSON_KEY_ASSET_NAME, rs.getString(2));
 						// y se le crea un nuevo arreglo de tipos
 						types = new JSONArray();
@@ -82,12 +81,11 @@ public class AutocompleteDAOImpl implements AutocompleteDAO
 						// agrego el activo al arreglo que contiene todo
 						values.put(asset);
 						// actualizo el activo actual
-						currentAssetId = rs.getInt(1);
+						currentAssetId = rs.getString(1);
 					}
 					// Guardo id y nombre del tipo actual en un objeto
 					JSONObject type = new JSONObject();
-					type.put(JSON_KEY_TYPE_ID, rs.getInt(3));
-					type.put(JSON_KEY_TYPE_NAME, rs.getString(4));
+					type.put(JSON_KEY_TYPE_NAME, rs.getString(3));
 					// Lo agrego al arreglo de tipos del activo actual
 					types.put(type);
 				}
@@ -101,10 +99,10 @@ public class AutocompleteDAOImpl implements AutocompleteDAO
 		return values;
 	}
 
-	public int saveAsset(String assetName)
+	public int saveAsset(String assetId, String assetName)
 	{
 		int value = 0;
-		if (assetName != null && assetName.length() > 0)
+		if (assetName != null && assetName.length() > 0 && assetId != null && assetId.length() > 0)
 		{
 			Connection myConn = null;
 			try
@@ -112,7 +110,7 @@ public class AutocompleteDAOImpl implements AutocompleteDAO
 				myConn = ds.getConnection();
 				Statement s = myConn.createStatement();
 				
-				String sql = "INSERT INTO assets (asset_name) VALUES ('" + assetName + "')";
+				String sql = "INSERT INTO assets (asset_id, asset_name) VALUES ('" + assetId + "', '"+assetName+"')";
 				value = s.executeUpdate(sql);
 				
 			} catch (SQLException e) {
@@ -149,10 +147,10 @@ public class AutocompleteDAOImpl implements AutocompleteDAO
 		return value;
 	}
 
-	public int deleteAsset(int assetId)
+	public int deleteAsset(String assetId)
 	{
 		int value = 0;
-		if (assetId != 0)
+		if (assetId != null && assetId.length() > 0)
 		{
 			Connection myConn = null;
 			try
@@ -160,7 +158,7 @@ public class AutocompleteDAOImpl implements AutocompleteDAO
 				myConn = ds.getConnection();
 				Statement s = myConn.createStatement();
 				String sql = "DELETE FROM assets " +
-							 "WHERE asset_id = " + assetId;
+							 "WHERE asset_id = '" + assetId+"'";
 				value = s.executeUpdate(sql);
 				
 			} catch (SQLException e) {
@@ -197,37 +195,12 @@ public class AutocompleteDAOImpl implements AutocompleteDAO
 		return value;
 	}
 
-	public int updateType(JSONObject t)
-	{
-		int value = 0;
-		if (!(t.isNull(JSON_KEY_TYPE_ID) || t.isNull(JSON_KEY_TYPE_NAME)))
-		{
-			Connection myConn = null;
-			try
-			{
-				myConn = ds.getConnection();
-				Statement s = myConn.createStatement();
-				String sql = null;
-				try {
-					sql = "UPDATE asset_types SET type_name = '" + t.getString(JSON_KEY_TYPE_NAME) + "' " +
-						  "WHERE type_id = " + t.getInt(JSON_KEY_TYPE_ID);
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-				
-				value = s.executeUpdate(sql);
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}	
-		}
-		return value;
-	}
+	
 
-	public int deleteType(int typeId)
+	public int deleteType(String assetId, String typeName )
 	{
 		int value = 0;
-		if (typeId != 0)
+		if (assetId != null && assetId.length() > 0 && typeName != null && typeName.length() > 0)
 		{
 			Connection myConn = null;
 			try
@@ -235,7 +208,7 @@ public class AutocompleteDAOImpl implements AutocompleteDAO
 				myConn = ds.getConnection();
 				Statement s = myConn.createStatement();
 				String sql = "DELETE FROM asset_types " +
-							 "WHERE type_id = " + typeId;
+							 "WHERE ASSET_ID = '" + assetId +"' and TYPE_NAME='"+typeName+"'";
 				value = s.executeUpdate(sql);
 				
 			} catch (SQLException e) {
@@ -305,5 +278,7 @@ public class AutocompleteDAOImpl implements AutocompleteDAO
 		}		
 		
 	}
+
+	
 
 }

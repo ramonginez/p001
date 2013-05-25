@@ -154,7 +154,8 @@ public class ActivoController implements Constants
 		JSONObject assetData = new JSONObject(data);
 		if (!assetData.isNull("asset_name"))
 		{
-			this.autocompleteDAO.saveAsset(assetData.getString("asset_name"));
+			this.autocompleteDAO.saveAsset(assetData.getString("asset_id"),
+					assetData.getString("asset_name"));
 			logger.debug("Asset saved...");
 		}
 
@@ -186,7 +187,7 @@ public class ActivoController implements Constants
 		JSONObject assetData = new JSONObject(data);
 		if (!assetData.isNull("asset_id"))
 		{
-			this.autocompleteDAO.deleteAsset(assetData.getInt("asset_id"));
+			this.autocompleteDAO.deleteAsset(assetData.getString("asset_id"));
 			logger.debug("Asset deleted...");
 		}
 
@@ -211,21 +212,7 @@ public class ActivoController implements Constants
 		return VIEW_ACTIVO;
 	}
 	
-	@RequestMapping(value="/asset/type/update", method = RequestMethod.POST)
-	public String typeUpdate(@RequestParam("data") String data, ModelMap model) throws JSONException
-	{
-		Logger logger = Logger.getLogger(ActivoController.class);
-		logger.debug("UPdating type");
-
-		JSONObject typeData = new JSONObject(data);
-		if (!(typeData.isNull("type_id") || typeData.isNull("type_name")))
-		{
-			this.autocompleteDAO.updateType(typeData);
-			logger.debug("Type updated...");
-		}
-
-		return VIEW_ACTIVO;
-	}
+	
 	
 	@RequestMapping(value="/asset/type/delete", method = RequestMethod.POST)
 	public String typeDelete(@RequestParam("data") String data, ModelMap model) throws JSONException
@@ -234,9 +221,9 @@ public class ActivoController implements Constants
 		logger.debug("Deleting type");
 
 		JSONObject typeData = new JSONObject(data);
-		if (!typeData.isNull("type_id"))
+		if (!typeData.isNull("type_name")&&!typeData.isNull("asset_id"))
 		{
-			this.autocompleteDAO.deleteType(typeData.getInt("type_id"));
+			this.autocompleteDAO.deleteType(typeData.getString("asset_id"),typeData.getString("type_name"));
 			logger.debug("Type saved...");
 		}
 

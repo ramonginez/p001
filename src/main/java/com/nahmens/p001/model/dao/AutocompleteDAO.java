@@ -12,11 +12,10 @@ public interface AutocompleteDAO
 	public static final String  JSON_KEY_TYPES_ARRAY = "types";
 	
 	public JSONArray getAllValues();
-	public int saveAsset(String assetName);
+	public int saveAsset(String assetId, String assetName);
 	public int updateAsset(JSONObject a);
-	public int deleteAsset(int assetId);
+	public int deleteAsset(String assetId);
 	public int saveType(JSONObject t);
-	public int updateType(JSONObject t);
-	public int deleteType(int typeId);
+	public int deleteType(String assetId, String typeName);
 	public void saveTypeMultiple(JSONArray jCampos) throws Exception;
 }
