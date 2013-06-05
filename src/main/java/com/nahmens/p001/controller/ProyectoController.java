@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +14,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.apache.log4j.Logger;
 
 import com.nahmens.p001.datacontroller.MysqlDataController;
+import com.nahmens.p001.model.dao.ProyectoDAO;
+import com.nahmens.p001.model.dao.ProyectoDAOImpl;
 import com.nahmens.p001.utils.Constants;
 
 @Controller
-public class ProyectoController implements Constants {
+public class ProyectoController implements Constants
+{
+	private ProyectoDAO proyectoDAO;
+	@Autowired
+	public void setProyectoDAO(ProyectoDAOImpl proyectoDAO) {
+		this.proyectoDAO = proyectoDAO;
+	}
 
 	Logger _logger = Logger.getLogger(ProyectoController.class);
 
@@ -63,27 +72,20 @@ public class ProyectoController implements Constants {
 	}
 
 	/*
-	 * SEARCH PROJECTS TODO: THE SEARCHS ARE RETURNING NULL
+	 * SEARCH PROJECTS
 	 */	
 	@RequestMapping(value="/"+REST_PATH_SEARCH_PROYECTO, method = RequestMethod.GET)
-	public String searchProyecto(@RequestParam(PARAMETER_KEY_PROYECTO_SEARCH_KEY)  String value,ModelMap model) throws SQLException, JSONException {
-
-
+	public String searchProyecto(@RequestParam(PARAMETER_KEY_PROYECTO_SEARCH_KEY)  String value, ModelMap model)
+	{
 		_logger.debug("Starting "+ REST_PATH_SEARCH_PROYECTO);		
 
-		if( value==null|| value.length()==0){
-
+		if( value==null|| value.length()==0)
+		{
 			return "redirect:"+REST_PATH_LIST_PROYECTO;
-
 		}
-		MysqlDataController msqlController = new MysqlDataController();
-
-		JSONArray proyectos = msqlController.buscarProyectos(value);
-
+		JSONArray proyectos = proyectoDAO.buscarProyectos(value);
 		model.addAttribute(PARAMETER_KEY_PROYECTOS, proyectos);
-
 		return VIEW_PROYECTO;
-
 	}
 
 	/*

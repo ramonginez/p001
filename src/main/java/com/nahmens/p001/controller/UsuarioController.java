@@ -28,7 +28,6 @@ public class UsuarioController implements Constants
 {
 	private UsuarioDAO userDAO;
 	private AutocompleteDAO autocomplteDAO;
-
 	@Autowired
 	public void setUserDAO(UsuarioDAOImpl userDAO, AutocompleteDAO autocomplteDAO)
 	{

@@ -444,58 +444,8 @@ public class MysqlDataController {
 		}				
 	}
 
-	public JSONArray buscarProyectos(String value)
-	{
-		Connection  conn = null;
-
-		JSONArray inventarios = new JSONArray();
-		
-		if ( value.length() > 0 )
-		{
-			try
-			{
-				conn = ds.getConnection();
-				Statement statement = conn.createStatement();
-
-				String query =	"SELECT Distinct(`value`) " +
-								"FROM data " +
-								"WHERE `key`='proyecto' " +
-								"AND LOWER(value) like '%" + value + "%'";
-				ResultSet rs = statement.executeQuery(query);
-
-				while (rs.next())
-				{
-					JSONObject p = new JSONObject();
-					p.put("name", rs.getString(1));
-					inventarios.put(p);
-				}
-				rs.close();
-
-				statement.close();
-
-				return inventarios;
-			}
-			catch (SQLException e)
-			{
-				e.printStackTrace();
-			}
-			catch (JSONException e)
-			{
-				e.printStackTrace();
-			}
-			finally
-			{
-				try
-				{
-					conn.close();
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
-			}			
-		}
-
+	public JSONArray buscarProyectos(String value) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
