@@ -2,7 +2,8 @@ package com.nahmens.p001.utils;
 
 public interface Constants {
 
-
+	public static final String INVENTARIO_PLACE_HOLDER = "_placeHolder_for_new_proyect";
+	
 	public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
 	public static final String REST_PATH_CHECKIN ="checkin";

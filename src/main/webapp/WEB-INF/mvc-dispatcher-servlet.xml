@@ -27,4 +27,6 @@
 	<bean id="autocompleteBO" class="com.nahmens.p001.model.dao.AutocompleteDAOImpl" />
 	
 	<bean id="proyectoBO" class="com.nahmens.p001.model.dao.ProyectoDAOImpl" />
+
+	<bean id="activoBO" class="com.nahmens.p001.model.dao.ActivoDAOImpl" />
 </beans>

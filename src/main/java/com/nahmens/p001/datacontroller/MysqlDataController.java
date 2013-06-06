@@ -134,7 +134,7 @@ public class MysqlDataController {
 		return getActivos(projectName,false);
 	}
 
-	public JSONArray getActivos(String projectName,boolean includeEmptyProject) throws SQLException, JSONException {
+	public JSONArray getActivos(String projectName, boolean includeEmptyProject) throws SQLException, JSONException {
 
 		Connection  conn = null;
 
@@ -445,12 +445,12 @@ public class MysqlDataController {
 	}
 
 	public JSONArray buscarProyectos(String value) {
-		// TODO Auto-generated method stub
+		// TODO Eliminar este metodo. Se transfirio al contexto correspondiente
 		return null;
 	}
 
 	public JSONArray buscarActivos(String name, String value) {
-		// TODO Auto-generated method stub
+		// TODO Eliminar este metodo. Se transfirio al contexto correspondiente
 		return null;
 	}
 
