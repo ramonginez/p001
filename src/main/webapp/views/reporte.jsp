@@ -36,6 +36,7 @@ public String getJsonVal(String key, JSONObject activo)throws Exception{
 		    <table align="left" border="2">
         	<thead>
             	<tr bgcolor="lightgreen">
+		                <th align="center">Proyecto</th>
 		                <th align="center">Nombre</th>
 		                <th align="center">Codigo VASA</th>
 		                <th align="center">Codigo cliente</th>
@@ -78,6 +79,7 @@ public String getJsonVal(String key, JSONObject activo)throws Exception{
 				org.json.JSONObject activo = activos.getJSONObject(i);%>
 				
            <tr >
+                <td align="center"><%=invId%></td>
                 <td align="center"><%=getJsonVal("nombre",activo)%></td>
                 <td align="center"><%=getJsonVal("codigoVasa",activo)%></td>
                 <td align="center"><%=getJsonVal("codigoCliente",activo)%></td>
